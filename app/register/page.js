@@ -1,20 +1,32 @@
-<input
+"use client";
 
-className="form-control mb-3"
+import { useState } from "react";
 
-name="address"
+export default function Register() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    address: "",
+    password: "",
+    password_confirmation: "",
+  });
 
-placeholder="Adresse complète"
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-onChange={handleChange}
-
-/>
-const [form,setForm]=useState({
-
-name:"",
-email:"",
-address:"",
-password:"",
-password_confirmation:""
-
-});
+  return (
+    <div>
+      <input
+        className="form-control mb-3"
+        name="address"
+        placeholder="Adresse complète"
+        value={form.address}
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
