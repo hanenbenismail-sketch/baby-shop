@@ -1,26 +1,474 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+  --primary:#7EC8E3;
+  --secondary:#F8BBD0;
+  --accent:#FFD97D;
+  --success:#A8D5BA;
+
+  --background:#FFF9F5;
+  --text:#374151;
+
+  --white:#FFFFFF;
+  --footer:#334155;
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+
+*{
+
+box-sizing:border-box;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+
+body{
+
+background:var(--background);
+
+color:var(--text);
+
+margin:0;
+
+font-family:Arial, Helvetica, sans-serif;
+
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+
+/* =====================
+      HERO SECTION
+===================== */
+
+
+.hero{
+
+min-height:450px;
+
+background:linear-gradient(
+135deg,
+var(--primary),
+var(--secondary)
+);
+
+border-radius:25px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+padding:40px;
+
+color:white;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,0.4);
+
+box-shadow:
+
+0 20px 50px rgba(126,200,227,0.25);
+
+}
+
+
+
+.hero-content{
+
+max-width:500px;
+
+z-index:2;
+
+}
+
+
+
+.hero h1{
+
+font-size:50px;
+
+font-weight:700;
+
+letter-spacing:-1px;
+
+}
+
+
+
+.hero p{
+
+font-size:22px;
+
+margin:20px 0;
+
+}
+
+
+
+.hero-image{
+
+border-radius:25px;
+
+object-fit:cover;
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,0.15);
+
+transition:.4s;
+
+}
+
+
+
+.hero-image:hover{
+
+transform:scale(1.03);
+
+}
+
+
+
+/* =====================
+        CARDS
+===================== */
+
+
+.card{
+
+background:var(--white);
+
+border-radius:20px;
+
+border:1px solid #eeeeee;
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,0.08);
+
+transition:.3s ease;
+
+}
+
+
+
+.card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,0.12);
+
+}
+
+
+
+/* =====================
+       LOGIN PAGE
+===================== */
+
+
+.login-page{
+
+min-height:80vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:var(--background);
+
+padding:40px;
+
+}
+
+
+
+.login-card{
+
+display:flex;
+
+width:900px;
+
+background:white;
+
+border-radius:25px;
+
+overflow:hidden;
+
+border:1px solid #eee;
+
+box-shadow:
+
+0 15px 40px rgba(0,0,0,0.15);
+
+}
+
+
+
+.login-image{
+
+width:50%;
+
+overflow:hidden;
+
+}
+
+
+
+.login-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+transition:.5s;
+
+}
+
+
+
+.login-image img:hover{
+
+transform:scale(1.05);
+
+}
+
+
+
+.login-form{
+
+width:50%;
+
+padding:50px;
+
+}
+
+
+
+.login-form h1{
+
+font-size:40px;
+
+color:var(--primary);
+
+font-weight:700;
+
+}
+
+
+
+.login-form p{
+
+color:#666;
+
+}
+
+
+
+.login-form label{
+
+font-weight:600;
+
+}
+
+
+
+.login-form input{
+
+height:45px;
+
+border-radius:10px;
+
+border:1px solid #ddd;
+
+padding:12px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+
+
+.login-form input:focus{
+
+border-color:var(--primary);
+
+box-shadow:
+
+0 0 0 4px rgba(126,200,227,.2);
+
+}
+
+
+
+/* =====================
+       BUTTONS
+===================== */
+
+
+.btn-login{
+
+width:100%;
+
+height:45px;
+
+border:none;
+
+border-radius:12px;
+
+background:linear-gradient(
+135deg,
+var(--primary),
+#5FB4D6
+);
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+box-shadow:
+
+0 10px 20px rgba(126,200,227,.3);
+
+}
+
+
+
+.btn-login:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 15px 30px rgba(126,200,227,.45);
+
+}
+
+
+
+/* =====================
+       TITLES
+===================== */
+
+
+h2{
+
+font-weight:700;
+
+color:#263238;
+
+}
+
+
+
+/* =====================
+       FOOTER
+===================== */
+
+
+.footer{
+
+background:var(--footer);
+
+color:white;
+
+border-radius:25px 25px 0 0;
+
+padding:50px 30px;
+
+margin-top:60px;
+
+}
+
+
+
+/* LINKS */
+
+a{
+
+transition:.3s;
+
+}
+
+
+
+/* =====================
+       RESPONSIVE
+===================== */
+
+
+@media(max-width:768px){
+
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+
+.hero h1{
+
+font-size:35px;
+
+}
+
+
+
+.hero-image{
+
+margin-top:30px;
+
+}
+
+
+
+.login-card{
+
+flex-direction:column;
+
+}
+
+
+
+.login-image,
+.login-form{
+
+width:100%;
+
+}
+
+
+
+.login-form{
+
+padding:30px;
+
+}
+
+
+
 }
