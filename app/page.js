@@ -1,51 +1,24 @@
 import Link from "next/link";
-import Image from "next/image";
 
+import Hero from "./components/Hero";
 import Categories from "./components/Categories";
 import Features from "./components/Features";
 
 
+
 export default function Home(){
+
 
 return (
 
 <div>
 
 
+
 {/* HERO */}
 
-<section className="hero">
+<Hero />
 
-<div className="hero-content">
-
-<h1>
-Bienvenue chez Baby Shop 🍼
-</h1>
-
-<p>
-Tout pour le confort et le bonheur de votre bébé
-</p>
-
-<Link
-href="/products"
-className="btn btn-light btn-lg"
->
-Découvrir nos produits
-</Link>
-
-</div>
-
-
-<Image
-src="/images/baby-banner.jpg"
-alt="Baby Shop"
-width={600}
-height={400}
-className="hero-image"
-/>
-
-
-</section>
 
 
 
@@ -57,6 +30,7 @@ className="hero-image"
 
 
 
+
 {/* FEATURES */}
 
 <Features />
@@ -64,98 +38,213 @@ className="hero-image"
 
 
 
-{/* PRODUITS */}
 
-<section className="container mt-5">
 
-<div className="text-center">
 
-<h2>
+{/* PRODUCTS INTRO */}
+
+<section
+className="
+max-w-7xl
+mx-auto
+px-6
+py-16
+text-center
+"
+>
+
+
+<h2
+className="
+text-3xl
+md:text-4xl
+font-bold
+text-gray-800
+mb-4
+"
+>
+
 🛍 Nos produits bébé
+
 </h2>
 
-<p>
-Découvrez notre collection pour bébé
+
+
+<p
+className="
+text-gray-600
+mb-8
+"
+>
+
+Découvrez notre collection vêtements,
+jouets et accessoires bébé.
+
 </p>
 
 
+
+
 <Link
+
 href="/products"
-className="btn btn-primary"
+
+className="
+bg-pink-500
+hover:bg-pink-600
+text-white
+px-8
+py-3
+rounded-full
+font-semibold
+transition
+"
+
 >
+
 Voir tous les produits
+
 </Link>
 
 
-</div>
 
 </section>
 
 
 
 
-{/* LOCALISATION */}
 
-<section className="container mt-5 mb-5">
 
-<h2 className="text-center mb-4">
+
+{/* LOCATION */}
+
+<section
+className="
+max-w-7xl
+mx-auto
+px-6
+pb-16
+"
+>
+
+
+<h2
+className="
+text-3xl
+font-bold
+text-center
+mb-8
+"
+>
+
 📍 Localisation de notre boutique
+
 </h2>
 
 
-<div className="row align-items-center">
 
 
-<div className="col-md-5">
+<div
+className="
+grid
+md:grid-cols-2
+gap-8
+items-center
+"
+>
 
-<div className="card shadow p-4">
 
 
-<h3>
+
+
+<div
+className="
+bg-white
+shadow-lg
+rounded-3xl
+p-8
+"
+>
+
+
+<h3
+className="
+text-2xl
+font-bold
+mb-4
+"
+>
+
 🍼 Baby Shop
+
 </h3>
 
 
-<p>
+
+<p className="mb-3">
+
 📌 Adresse :
 <br/>
 Cité Chebbi, Tozeur, Tunisie
+
 </p>
 
 
-<p>
+
+<p className="mb-3">
+
 📞 Téléphone :
 <br/>
 +216 XX XXX XXX
+
 </p>
 
 
-<p>
+
+<p className="mb-5">
+
 🕘 Horaires :
 <br/>
 Lundi - Samedi : 08:00 - 18:00
+
 </p>
 
 
+
+
 <a
+
 href="https://www.google.com/maps"
+
 target="_blank"
-className="btn btn-primary"
+
+className="
+inline-block
+bg-blue-500
+text-white
+px-6
+py-3
+rounded-full
+hover:bg-blue-600
+"
+
 >
+
 Ouvrir Google Maps 📍
+
 </a>
 
 
-</div>
 
 </div>
 
 
 
-<div className="col-md-7 mt-4 mt-md-0">
 
-<div className="map-container">
 
+
+
+<div>
 
 <iframe
 
@@ -179,16 +268,20 @@ allowFullScreen
 
 </div>
 
-</div>
 
 
 </div>
+
 
 </section>
 
 
 
+
+
+
 </div>
+
 
 )
 

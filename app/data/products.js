@@ -9,6 +9,7 @@ category:"Vêtements",
 brand:"BabyCare",
 rating:5,
 stock:20,
+age:"0-12 mois",
 sizes:["0-3 mois","3-6 mois","6-12 mois"],
 colors:["Blue","Pink","White"],
 description:"Pyjama doux pour bébé 0-12 mois",
@@ -25,6 +26,7 @@ category:"Vêtements",
 brand:"Little Baby",
 rating:4,
 stock:30,
+age:"0-6 mois",
 sizes:["0-3 mois","6 mois"],
 colors:["White","Gray"],
 description:"Body confortable en coton bio",
@@ -40,6 +42,7 @@ category:"Jouets",
 brand:"Kids World",
 rating:5,
 stock:15,
+age:"6-12 mois",
 colors:["Multicolor"],
 description:"Jouet développement bébé",
 image:"/images/jouet.jpg"
@@ -55,6 +58,7 @@ category:"Transport",
 brand:"Baby Move",
 rating:5,
 stock:8,
+age:"0-12 mois",
 colors:["Black","Gray"],
 description:"Poussette confortable pliable",
 image:"/images/poussette.jpg"
@@ -69,6 +73,7 @@ category:"Chaussures",
 brand:"Tiny Shoes",
 rating:4,
 stock:25,
+age:"6-12 mois",
 sizes:["18","19","20"],
 colors:["Pink","Blue"],
 description:"Chaussures souples bébé",
@@ -84,6 +89,7 @@ category:"Mobilier",
 brand:"Baby Room",
 rating:5,
 stock:5,
+age:"0-12 mois",
 colors:["White","Wood"],
 description:"Lit sécurisé pour bébé",
 image:"/images/lit.jpg"
@@ -98,6 +104,7 @@ category:"Alimentation",
 brand:"Baby Care",
 rating:4,
 stock:50,
+age:"0-6 mois",
 colors:["Transparent"],
 description:"Biberon confortable pour bébé",
 image:"/images/biberon.jpg"
@@ -112,6 +119,7 @@ category:"Accessoires",
 brand:"Mom Style",
 rating:5,
 stock:12,
+age:"0-12 mois",
 colors:["Black","Pink"],
 description:"Sac pratique maman bébé",
 image:"/images/Sacàlanger.jpg"
@@ -126,6 +134,7 @@ category:"Hygiène",
 brand:"Soft Baby",
 rating:5,
 stock:40,
+age:"0-12 mois",
 description:"Shampoing doux peau sensible",
 image:"/images/shampoing.jpg"
 },
@@ -139,56 +148,93 @@ category:"Couches",
 brand:"Baby Dry",
 rating:5,
 stock:100,
+age:"0-12 mois",
 sizes:["S","M","L"],
 description:"Couches confortables absorbantes",
 image:"/images/couches.jpg"
 },
+
+
 {
-id:11,
+id:"11",
 name:"Couverture bébé",
 price:60,
-image:"/images/blanket.jpg",
 category:"Accessoires",
-description:"Couverture chaude et douce"
-}
-,
+brand:"Baby Soft",
+rating:5,
+stock:20,
+age:"0-12 mois",
+description:"Couverture chaude et douce",
+image:"/images/blanket.jpg"
+},
+
+
 {
-id:12,
-name:"Couverture bébé",
+id:"12",
+name:"Couverture bébé Premium",
 price:80,
-image:"/images/blanket1.jpg",
 category:"Accessoires",
-description:"Couverture chaude et douce"
-}
-,
+brand:"Baby Soft",
+rating:5,
+stock:15,
+age:"0-12 mois",
+description:"Couverture bébé qualité premium",
+image:"/images/blanket1.jpg"
+},
+
+
 {
-id:13,
-name:"Couverture bébé",
+id:"13",
+name:"Couverture bébé luxe",
 price:90,
-image:"/images/blanket2.jpg",
 category:"Accessoires",
-description:"Couverture chaude et douce"
-}
-,
+brand:"Baby Soft",
+rating:5,
+stock:10,
+age:"0-12 mois",
+description:"Couverture douce et confortable",
+image:"/images/blanket2.jpg"
+},
+
+
 {
-id:14,
-name:"Couverture bébé",
+id:"14",
+name:"Couverture bébé hiver",
 price:60,
-image:"/images/blanket3.jpg",
 category:"Accessoires",
-description:"Couverture chaude et douce"
-}
-,
+brand:"Baby Soft",
+rating:4,
+stock:25,
+age:"0-12 mois",
+description:"Couverture chaude pour hiver",
+image:"/images/blanket3.jpg"
+},
+
+
 {
-id:15,
-name:"Couverture bébé",
+id:"15",
+name:"Couverture bébé coton",
 price:70,
-image:"/images/blanket4.jpg",
 category:"Accessoires",
-description:"Couverture chaude et douce"
+brand:"Baby Soft",
+rating:5,
+stock:18,
+age:"0-12 mois",
+
+images:[
+"/images/blanket4.jpg",
+"/images/blanket3.jpg",
+"/images/blanket2.jpg"
+],
+
+description:"Couverture coton naturel douce et confortable",
+
+image:"/images/blanket4.jpg"
+
 }
 
 ];
+
 
 
 export default products;

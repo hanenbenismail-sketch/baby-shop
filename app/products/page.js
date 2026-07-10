@@ -1,42 +1,125 @@
+"use client";
+
+
+import {useState} from "react";
+
 import ProductCard from "../components/ProductCard";
+
+import ProductFilter from "../components/ProductFilter";
+
 import products from "../data/products";
+
 
 
 export default function ProductsPage(){
 
+
+
+const [filteredProducts,setFilteredProducts]=useState(products);
+
+
+
+
+
 return (
 
-<div className="container mt-5">
 
-<h1 className="text-center mb-5">
+<div className="
+container
+py-10
+">
+
+
+
+<h1 className="
+text-center
+text-4xl
+font-bold
+mb-8
+">
+
 🛍 Nos produits bébé
+
 </h1>
 
 
-<div className="row">
 
-{
-products.map((product)=>(
 
-<div 
-className="col-md-4 mb-4"
-key={product.id}
->
 
-<ProductCard
-product={product}
+
+<ProductFilter
+
+products={products}
+
+onFilter={setFilteredProducts}
+
 />
 
-</div>
+
+
+
+
+
+
+<div className="
+grid
+md:grid-cols-3
+gap-6
+">
+
+
+
+{
+
+filteredProducts.length > 0 ?
+
+
+
+filteredProducts.map(product=>(
+
+
+<ProductCard
+
+key={product.id}
+
+product={product}
+
+/>
+
 
 ))
+
+
+
+:
+
+<div className="
+text-center
+col-span-3
+text-xl
+">
+
+😔 Aucun produit trouvé
+
+</div>
+
+
+
 }
 
+
+
+
 </div>
 
 
+
+
+
 </div>
 
-)
+
+);
+
 
 }

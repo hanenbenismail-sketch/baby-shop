@@ -1,36 +1,35 @@
 "use client";
 
 
-import {useContext,useState} from "react";
-
-import {CartContext} from "../../context/CartContext";
+import { useState } from "react";
+import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Checkout(){
 
 
+
 const {
-
 cart,
-
-totalPrice
-
-}=useContext(CartContext);
-
+totalPrice,
+clearCart
+}=useCart();
 
 
-const [customer,setCustomer]=useState({
+
+const router = useRouter();
+
+
+
+
+const [form,setForm]=useState({
 
 name:"",
-
 phone:"",
-
 address:"",
-
-city:"",
-
-postal:""
+city:""
 
 });
 
@@ -40,12 +39,15 @@ const [success,setSuccess]=useState(false);
 
 
 
+
+
+
 function handleChange(e){
 
 
-setCustomer({
+setForm({
 
-...customer,
+...form,
 
 [e.target.name]:e.target.value
 
@@ -56,58 +58,198 @@ setCustomer({
 
 
 
+
+
+
+
 function handleSubmit(e){
+
 
 e.preventDefault();
 
 
+
+if(!form.name || !form.phone || !form.address || !form.city){
+
+alert("Veuillez remplir tous les champs");
+
+return;
+
+}
+
+
+
+
 setSuccess(true);
+
+
+
+clearCart();
 
 
 }
 
 
 
+
+
+
+
+if(success){
+
+
 return (
 
-<div className="container mt-5 mb-5">
+<div className="
+min-h-screen
+flex
+items-center
+justify-center
+px-6
+">
 
 
-<h1 className="text-center mb-5">
+<div className="
+bg-white
+shadow-xl
+rounded-3xl
+p-10
+text-center
+max-w-lg
+">
 
-📦 Finaliser votre commande
+
+<h1 className="
+text-3xl
+font-bold
+text-green-600
+mb-4
+">
+
+✅ Commande confirmée
 
 </h1>
 
 
 
-<div className="row">
+<p className="text-gray-600 mb-6">
+
+Merci {form.name} !
+Votre commande sera préparée rapidement.
+
+</p>
 
 
 
-{/* FORMULAIRE LIVRAISON */}
+
+<button
+
+onClick={()=>router.push("/")}
+
+className="
+bg-pink-500
+text-white
+px-8
+py-3
+rounded-full
+"
+
+>
+
+Retour accueil
+
+</button>
 
 
-<div className="col-md-6">
+
+</div>
 
 
-<div className="card shadow p-4">
+</div>
 
 
-<h3>
-
-🚚 Informations de livraison
-
-</h3>
+);
 
 
+}
 
-<form onSubmit={handleSubmit}>
+
+
+
+
+
+
+
+
+return (
+
+<section className="
+max-w-6xl
+mx-auto
+px-6
+py-12
+">
+
+
+<h1 className="
+text-4xl
+font-bold
+text-center
+mb-10
+">
+
+🛒 Finaliser la commande
+
+</h1>
+
+
+
+
+
+
+<div className="
+grid
+md:grid-cols-2
+gap-10
+">
+
+
+
+
+
+{/* FORMULAIRE */}
+
+
+
+<form
+
+onSubmit={handleSubmit}
+
+className="
+bg-white
+shadow-lg
+rounded-3xl
+p-8
+"
+
+>
+
+
+
+<h2 className="
+text-2xl
+font-bold
+mb-6
+">
+
+Informations client
+
+</h2>
+
+
 
 
 <input
-
-className="form-control mb-3"
 
 name="name"
 
@@ -115,15 +257,20 @@ placeholder="Nom complet"
 
 onChange={handleChange}
 
-required
+className="
+w-full
+border
+rounded-xl
+p-3
+mb-4
+"
 
 />
 
 
 
-<input
 
-className="form-control mb-3"
+<input
 
 name="phone"
 
@@ -131,15 +278,21 @@ placeholder="Téléphone"
 
 onChange={handleChange}
 
-required
+className="
+w-full
+border
+rounded-xl
+p-3
+mb-4
+"
 
 />
 
 
 
-<input
 
-className="form-control mb-3"
+
+<input
 
 name="address"
 
@@ -147,15 +300,21 @@ placeholder="Adresse"
 
 onChange={handleChange}
 
-required
+className="
+w-full
+border
+rounded-xl
+p-3
+mb-4
+"
 
 />
 
 
 
-<input
 
-className="form-control mb-3"
+
+<input
 
 name="city"
 
@@ -163,31 +322,32 @@ placeholder="Ville"
 
 onChange={handleChange}
 
-required
+className="
+w-full
+border
+rounded-xl
+p-3
+mb-6
+"
 
 />
 
 
 
-<input
-
-className="form-control mb-3"
-
-name="postal"
-
-placeholder="Code postal"
-
-onChange={handleChange}
-
-required
-
-/>
 
 
 
 <button
 
-className="btn btn-success w-100"
+className="
+w-full
+bg-pink-500
+hover:bg-pink-600
+text-white
+py-3
+rounded-xl
+font-bold
+"
 
 >
 
@@ -197,49 +357,59 @@ Confirmer la commande
 
 
 
+
+
 </form>
 
 
-</div>
-
-
-</div>
 
 
 
 
 
-{/* RECAPITULATIF */}
 
 
-<div className="col-md-6">
+
+{/* RESUME */}
 
 
-<div className="card shadow p-4">
+
+<div className="
+bg-gray-50
+rounded-3xl
+p-8
+"
+>
 
 
-<h3>
 
-🛒 Votre commande
+<h2 className="
+text-2xl
+font-bold
+mb-6
+">
 
-</h3>
+Résumé commande
+
+</h2>
+
+
 
 
 
 
 {
 
-cart.length===0
-
-?
+cart.length === 0 ?
 
 <p>
+
 Votre panier est vide
+
 </p>
 
 
 :
-
 
 cart.map(item=>(
 
@@ -248,30 +418,29 @@ cart.map(item=>(
 
 key={item.id}
 
-className="border-bottom py-3"
-
+className="
+flex
+justify-between
+border-b
+py-3
+"
 
 >
 
 
-<div className="d-flex justify-content-between">
-
-
 <span>
 
-{item.name}
+{item.name} × {item.quantity}
 
 </span>
 
 
+
 <span>
 
-{item.quantity} x {item.price} TND
+{item.price * item.quantity} DT
 
 </span>
-
-
-</div>
 
 
 
@@ -286,24 +455,41 @@ className="border-bottom py-3"
 
 
 
-<h4 className="mt-4 text-end">
+
+<div className="
+mt-6
+text-xl
+font-bold
+flex
+justify-between
+">
 
 
-Total :
+<span>
 
-{totalPrice()}
+Total
 
-TND
+</span>
 
 
-</h4>
+
+<span className="text-pink-500">
+
+{totalPrice()} DT
+
+</span>
+
+
+
+</div>
+
+
 
 
 
 </div>
 
 
-</div>
 
 
 
@@ -311,46 +497,10 @@ TND
 
 
 
-
-{
-
-
-success &&
+</section>
 
 
-<div className="alert alert-success mt-4 text-center">
+);
 
-
-<h3>
-✅ Commande confirmée !
-</h3>
-
-
-<p>
-
-Merci {customer.name} pour votre commande.
-
-</p>
-
-
-<p>
-
-Nous allons livrer à :
-
-{customer.address}
-
-</p>
-
-
-</div>
-
-
-}
-
-
-
-</div>
-
-)
 
 }

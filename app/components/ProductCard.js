@@ -1,7 +1,11 @@
 "use client";
 
+
+import Image from "next/image";
 import Link from "next/link";
+
 import { useCart } from "@/context/CartContext";
+
 
 
 export default function ProductCard({product}){
@@ -10,71 +14,199 @@ export default function ProductCard({product}){
 const { addToCart } = useCart();
 
 
-return (
 
-<div className="card shadow h-100">
+return (
 
 
 <div
-style={{
-height:"250px",
-overflow:"hidden"
-}}
+className="
+bg-white
+rounded-3xl
+overflow-hidden
+shadow-sm
+border
+border-gray-100
+hover:shadow-xl
+transition
+h-full
+flex
+flex-col
+"
 >
 
-<img
+
+
+
+
+{/* IMAGE */}
+
+<div
+className="
+relative
+w-full
+h-56
+sm:h-64
+"
+>
+
+
+<Image
 
 src={product.image}
 
-className="card-img-top"
-
 alt={product.name}
 
-style={{
-width:"100%",
-height:"100%",
-objectFit:"cover"
-}}
+fill
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-300
+"
 
 />
+
 
 </div>
 
 
 
-<div className="card-body">
 
 
-<h5 className="card-title">
+
+
+{/* CONTENT */}
+
+
+<div
+className="
+p-5
+flex
+flex-col
+flex-1
+"
+>
+
+
+<h3
+className="
+text-lg
+font-bold
+text-gray-800
+mb-2
+line-clamp-1
+"
+>
+
 {product.name}
-</h5>
+
+</h3>
 
 
-<p className="text-primary fw-bold">
-{product.price} TND
-</p>
 
 
-<p>
+
+<p
+className="
+text-sm
+text-gray-500
+mb-3
+line-clamp-2
+"
+>
+
 {product.description}
+
 </p>
 
 
 
-<div className="d-flex gap-2">
+
+
+
+
+<div
+className="
+flex
+justify-between
+items-center
+mb-4
+"
+>
+
+
+<span
+className="
+text-xl
+font-bold
+text-pink-500
+"
+>
+
+{product.price} DT
+
+</span>
+
+
+
+<span
+className="
+text-yellow-500
+"
+>
+
+{"⭐".repeat(product.rating || 0)}
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div
+className="
+flex
+flex-col
+sm:flex-row
+gap-3
+mt-auto
+"
+>
+
 
 
 <button
 
-onClick={() => addToCart(product)}
+onClick={()=>addToCart(product)}
 
-className="btn btn-success"
+className="
+bg-pink-500
+hover:bg-pink-600
+text-white
+py-2
+px-4
+rounded-xl
+transition
+font-semibold
+"
 
 >
 
-Ajouter au panier
+🛒 Ajouter
 
 </button>
+
+
+
 
 
 
@@ -82,7 +214,17 @@ Ajouter au panier
 
 href={`/product/${product.id}`}
 
-className="btn btn-primary"
+className="
+bg-blue-500
+hover:bg-blue-600
+text-white
+py-2
+px-4
+rounded-xl
+text-center
+transition
+font-semibold
+"
 
 >
 
@@ -91,14 +233,25 @@ Voir détail
 </Link>
 
 
-</div>
 
-
-</div>
 
 
 </div>
 
-)
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+);
+
 
 }
