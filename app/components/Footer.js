@@ -1,32 +1,47 @@
 import Image from "next/image";
 import Link from "next/link";
+
+
 export default function Footer(){
+
 
 return (
 
-<footer className="
-bg-slate-800
-text-white
+
+<footer
+className="
 mt-16
 rounded-t-3xl
-">
+bg-gradient-to-br
+from-pink-50
+via-white
+to-blue-50
+text-gray-700
+"
+>
 
 
-<div className="
+<div
+className="
 max-w-7xl
 mx-auto
 px-6
 py-12
 grid
-md:grid-cols-4
+md:grid-cols-5
 gap-10
-">
+"
+>
 
 
-{/* Description */}
-{/* Brand / Description */}
+
+
+
+{/* BRAND */}
+
 
 <div>
+
 
 <Link
 href="/"
@@ -38,17 +53,25 @@ mb-4
 "
 >
 
+
 <Image
+
 src="/images/logo.jpg"
+
 alt="Baby Shop Logo"
+
 width={55}
+
 height={55}
+
 className="
 rounded-full
 object-cover
 shadow-md
 "
+
 />
+
 
 
 <div className="flex flex-col">
@@ -59,21 +82,31 @@ className="
 text-2xl
 font-extrabold
 tracking-wide
-text-pink-400
+bg-gradient-to-r
+from-pink-500
+to-blue-500
+bg-clip-text
+text-transparent
 "
 >
+
 BABY-SHOP
+
 </span>
+
 
 
 <span
 className="
 text-xs
-text-gray-300
+text-gray-500
 "
 >
+
 Boutique bébé 🍼
+
 </span>
+
 
 
 </div>
@@ -83,91 +116,289 @@ Boutique bébé 🍼
 
 
 
+
+
+
 <p
 className="
-text-gray-300
+text-gray-600
 leading-7
 "
 >
+
 Votre boutique en ligne spécialisée
 dans les produits bébé.
 Des articles de qualité pour
-le confort et le bonheur de votre bébé.
+le confort de votre bébé.
+
 </p>
+
 
 
 </div>
 
-{/* Navigation */}
+
+
+
+
+
+
+
+{/* NAVIGATION */}
+
+
 
 <div>
 
-<h4 className="
-text-xl
-font-semibold
+
+<h4
+className="
+text-lg
+font-bold
+text-pink-500
 mb-4
-text-blue-300
-">
+"
+>
+
 Navigation
+
 </h4>
 
 
-<ul className="
+
+
+<ul
+className="
 space-y-3
-text-gray-300
-">
+"
+>
 
 
 <li>
+
+<Link
+href="/"
+className="
+hover:text-pink-500
+transition
+"
+>
+
 Accueil
+
+</Link>
+
 </li>
 
 
+
 <li>
+
+<Link
+href="/products"
+className="
+hover:text-pink-500
+transition
+"
+>
+
 Produits
+
+</Link>
+
 </li>
 
 
+
+
 <li>
+
+<Link
+href="/categories"
+className="
+hover:text-pink-500
+transition
+"
+>
+
 Catégories
+
+</Link>
+
 </li>
+
+
+
 
 
 <li>
+
+<Link
+href="/cart"
+className="
+hover:text-pink-500
+transition
+"
+>
+
 Panier
+
+</Link>
+
 </li>
+
 
 
 </ul>
 
 
+
 </div>
 
 
 
 
-{/* Contact */}
+
+
+
+
+
+
+{/* COMPTE */}
+
+
 
 <div>
 
-<h4 className="
-text-xl
-font-semibold
+
+<h4
+className="
+text-lg
+font-bold
+text-blue-500
 mb-4
-text-blue-300
-">
-Contact
+"
+>
+
+Mon compte
+
 </h4>
 
 
-<ul className="
+
+<ul
+className="
 space-y-3
-text-gray-300
-">
+"
+>
 
 
 <li>
-📍 Tozeur, Tunisie
+
+<Link
+href="/login"
+className="
+hover:text-blue-500
+transition
+"
+>
+
+Connexion
+
+</Link>
+
+
+</li>
+
+
+
+
+<li>
+
+<Link
+href="/register"
+className="
+hover:text-blue-500
+transition
+"
+>
+
+Créer un compte
+
+</Link>
+
+
+</li>
+
+
+
+
+<li>
+
+<Link
+href="/checkout"
+className="
+hover:text-blue-500
+transition
+"
+>
+
+Commande
+
+</Link>
+
+
+</li>
+
+
+
+</ul>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* CONTACT */}
+
+
+
+<div>
+
+
+<h4
+className="
+text-lg
+font-bold
+text-pink-500
+mb-4
+"
+>
+
+Contact
+
+</h4>
+
+
+
+
+<ul
+className="
+space-y-3
+text-gray-600
+"
+>
+
+
+<li>
+📍 Tunisie
 </li>
 
 
@@ -186,141 +417,215 @@ text-gray-300
 </li>
 
 
+
 </ul>
 
 
+
 </div>
 
 
 
 
-{/* Social + Security */}
+
+
+
+
+{/* SOCIAL */}
 
 <div>
 
-<h4 className="
-text-xl
-font-semibold
+
+<h4
+className="
+text-lg
+font-bold
+text-blue-500
 mb-4
-text-blue-300
-">
+"
+>
+
 Suivez-nous
+
 </h4>
 
 
-<div className="
+
+
+
+<div
+className="
 flex
 gap-3
 mb-6
-">
+"
+>
 
+
+
+{/* Facebook */}
 
 <a
+href="https://facebook.com"
+target="_blank"
+rel="noopener noreferrer"
 className="
 w-10
 h-10
 rounded-full
-bg-pink-400
+bg-blue-500
+text-white
 flex
 items-center
 justify-center
+font-bold
 hover:scale-110
 transition
 "
 >
+
 f
+
 </a>
 
 
+
+
+
+
+{/* Instagram */}
+
+
 <a
+href="https://instagram.com"
+target="_blank"
+rel="noopener noreferrer"
 className="
 w-10
 h-10
 rounded-full
-bg-blue-400
+bg-pink-500
+text-white
 flex
 items-center
 justify-center
+font-bold
 hover:scale-110
 transition
 "
 >
-in
+
+◎
+
 </a>
 
 
+
+
+
+
+
+
+{/* WhatsApp */}
+
+
 <a
+href="https://wa.me/216XXXXXXXX"
+target="_blank"
+rel="noopener noreferrer"
 className="
 w-10
 h-10
 rounded-full
-bg-green-400
+bg-green-500
+text-white
 flex
 items-center
 justify-center
+font-bold
 hover:scale-110
 transition
 "
 >
+
 W
+
 </a>
+
+
+
 
 
 </div>
 
 
 
-<h4 className="
-font-semibold
-text-blue-300
+
+
+<h4
+className="
+text-lg
+font-bold
+text-blue-500
 mb-3
-">
+"
+>
+
 Sécurité
+
 </h4>
 
 
-<p className="
-text-gray-300
-text-sm
-">
 
-🔒 Paiement sécurisé  
+<p
+className="
+text-gray-600
+text-sm
+leading-7
+"
+>
+
+🔒 Paiement sécurisé
+
 <br/>
-🚚 Livraison rapide  
+
+🚚 Livraison rapide
+
 <br/>
+
 ✅ Produits vérifiés
 
 </p>
 
 
-</div>
 
 
 </div>
+</div>
 
 
-
-
-
-<div className="
+<div
+className="
 border-t
-border-gray-600
+border-gray-200
 text-center
 py-5
-text-gray-400
 text-sm
-">
+text-gray-500
+"
+>
 
-
-© 2026 BABY-SHOP.
+© {new Date().getFullYear()} BABY-SHOP.
 Tous droits réservés.
 
-
 </div>
+
 
 
 </footer>
 
-)
+
+);
+
 
 }

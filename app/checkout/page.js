@@ -1,26 +1,21 @@
 "use client";
 
-
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 
 
-
 export default function Checkout(){
-
 
 
 const {
 cart,
-totalPrice,
-clearCart
+totalPrice
 }=useCart();
 
 
 
 const router = useRouter();
-
 
 
 
@@ -35,15 +30,10 @@ city:""
 
 
 
-const [success,setSuccess]=useState(false);
-
-
-
 
 
 
 function handleChange(e){
-
 
 setForm({
 
@@ -53,9 +43,7 @@ setForm({
 
 });
 
-
 }
-
 
 
 
@@ -64,12 +52,16 @@ setForm({
 
 function handleSubmit(e){
 
-
 e.preventDefault();
 
 
 
-if(!form.name || !form.phone || !form.address || !form.city){
+if(
+!form.name ||
+!form.phone ||
+!form.address ||
+!form.city
+){
 
 alert("Veuillez remplir tous les champs");
 
@@ -79,12 +71,14 @@ return;
 
 
 
+localStorage.setItem(
+"customer",
+JSON.stringify(form)
+);
 
-setSuccess(true);
 
 
-
-clearCart();
+router.push("/payment");
 
 
 }
@@ -94,69 +88,62 @@ clearCart();
 
 
 
-
-if(success){
+if(cart.length===0){
 
 
 return (
 
-<div className="
+<div
+className="
 min-h-screen
 flex
 items-center
 justify-center
 px-6
-">
+"
+>
 
 
-<div className="
-bg-white
-shadow-xl
-rounded-3xl
-p-10
+<div
+className="
 text-center
-max-w-lg
-">
+"
+>
 
 
-<h1 className="
+<h1
+className="
 text-3xl
 font-bold
-text-green-600
-mb-4
-">
+text-gray-800
+mb-5
+"
+>
 
-✅ Commande confirmée
+Votre panier est vide 🛒
 
 </h1>
 
 
 
-<p className="text-gray-600 mb-6">
-
-Merci {form.name} !
-Votre commande sera préparée rapidement.
-
-</p>
-
-
-
-
 <button
 
-onClick={()=>router.push("/")}
+onClick={()=>router.push("/products")}
 
 className="
 bg-pink-500
+hover:bg-pink-600
 text-white
 px-8
 py-3
-rounded-full
+rounded-xl
+font-bold
+transition
 "
 
 >
 
-Retour accueil
+Voir les produits
 
 </button>
 
@@ -166,7 +153,6 @@ Retour accueil
 
 
 </div>
-
 
 );
 
@@ -179,24 +165,30 @@ Retour accueil
 
 
 
-
-
 return (
 
-<section className="
+
+<section
+className="
 max-w-6xl
 mx-auto
-px-6
+px-4
+sm:px-6
 py-12
-">
+"
+>
 
 
-<h1 className="
+
+<h1
+className="
 text-4xl
 font-bold
 text-center
 mb-10
-">
+text-gray-800
+"
+>
 
 🛒 Finaliser la commande
 
@@ -207,11 +199,14 @@ mb-10
 
 
 
-<div className="
+<div
+className="
 grid
 md:grid-cols-2
 gap-10
-">
+"
+>
+
 
 
 
@@ -230,17 +225,19 @@ bg-white
 shadow-lg
 rounded-3xl
 p-8
+border
 "
 
 >
 
 
-
-<h2 className="
+<h2
+className="
 text-2xl
 font-bold
 mb-6
-">
+"
+>
 
 Informations client
 
@@ -249,11 +246,19 @@ Informations client
 
 
 
+
+
 <input
+
+type="text"
 
 name="name"
 
+required
+
 placeholder="Nom complet"
+
+value={form.name}
 
 onChange={handleChange}
 
@@ -263,6 +268,9 @@ border
 rounded-xl
 p-3
 mb-4
+outline-none
+focus:ring-2
+focus:ring-pink-300
 "
 
 />
@@ -270,11 +278,19 @@ mb-4
 
 
 
+
+
 <input
+
+type="tel"
 
 name="phone"
 
+required
+
 placeholder="Téléphone"
+
+value={form.phone}
 
 onChange={handleChange}
 
@@ -284,6 +300,9 @@ border
 rounded-xl
 p-3
 mb-4
+outline-none
+focus:ring-2
+focus:ring-pink-300
 "
 
 />
@@ -292,11 +311,18 @@ mb-4
 
 
 
+
 <input
+
+type="text"
 
 name="address"
 
+required
+
 placeholder="Adresse"
+
+value={form.address}
 
 onChange={handleChange}
 
@@ -306,6 +332,9 @@ border
 rounded-xl
 p-3
 mb-4
+outline-none
+focus:ring-2
+focus:ring-pink-300
 "
 
 />
@@ -314,11 +343,18 @@ mb-4
 
 
 
+
 <input
+
+type="text"
 
 name="city"
 
+required
+
 placeholder="Ville"
+
+value={form.city}
 
 onChange={handleChange}
 
@@ -328,6 +364,9 @@ border
 rounded-xl
 p-3
 mb-6
+outline-none
+focus:ring-2
+focus:ring-pink-300
 "
 
 />
@@ -347,14 +386,14 @@ text-white
 py-3
 rounded-xl
 font-bold
+transition
 "
 
 >
 
-Confirmer la commande
+Continuer vers paiement
 
 </button>
-
 
 
 
@@ -369,25 +408,28 @@ Confirmer la commande
 
 
 
-
 {/* RESUME */}
 
 
 
-<div className="
+<div
+className="
 bg-gray-50
 rounded-3xl
 p-8
+border
 "
 >
 
 
 
-<h2 className="
+<h2
+className="
 text-2xl
 font-bold
 mb-6
-">
+"
+>
 
 Résumé commande
 
@@ -399,17 +441,6 @@ Résumé commande
 
 
 {
-
-cart.length === 0 ?
-
-<p>
-
-Votre panier est vide
-
-</p>
-
-
-:
 
 cart.map(item=>(
 
@@ -436,7 +467,11 @@ py-3
 
 
 
-<span>
+<span
+className="
+font-semibold
+"
+>
 
 {item.price * item.quantity} DT
 
@@ -456,13 +491,17 @@ py-3
 
 
 
-<div className="
+
+
+<div
+className="
 mt-6
 text-xl
 font-bold
 flex
 justify-between
-">
+"
+>
 
 
 <span>
@@ -473,7 +512,11 @@ Total
 
 
 
-<span className="text-pink-500">
+<span
+className="
+text-pink-500
+"
+>
 
 {totalPrice()} DT
 
@@ -487,13 +530,17 @@ Total
 
 
 
+
+</div>
+
+
+
+
+
+
 </div>
 
 
-
-
-
-</div>
 
 
 

@@ -2,100 +2,128 @@ import products from "@/app/data/products";
 import ProductCard from "@/app/components/ProductCard";
 
 
-export default async function CategoryPage({params}){
+export default async function CategoryPage({ params }) {
 
 
-const {slug}=await params;
-
-
-
-const filteredProducts = products.filter((product)=>
-
-product.category
-.toLowerCase()
-.normalize("NFD")
-.replace(/[\u0300-\u036f]/g,"")
-.replaceAll(" ","-")
-.includes(slug)
-
-);
+  const { slug } = await params;
 
 
 
-return (
+  const filteredProducts = products.filter((product) =>
 
-<section className="py-16 px-6">
+    product.category
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replaceAll(" ", "-")
+      .includes(slug)
 
-<div className="max-w-7xl mx-auto">
-
-
-<h1
-className="
-text-3xl
-font-bold
-text-center
-mb-10
-capitalize
-"
->
-
-{slug.replaceAll("-"," ")}
-
-</h1>
+  );
 
 
 
-<div
-className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-4
-gap-6
-"
->
+  return (
+
+    <section
+      className="
+      py-16
+      px-4
+      sm:px-6
+      "
+    >
 
 
-{
-filteredProducts.map((product)=>(
-
-<ProductCard
-
-key={product.id}
-
-product={product}
-
-/>
-
-))
-}
-
-
-</div>
+      <div
+        className="
+        max-w-screen-xl
+        mx-auto
+        "
+      >
 
 
 
-{
-filteredProducts.length===0 && (
+        <h1
+          className="
+          text-3xl
+          sm:text-4xl
+          font-bold
+          text-center
+          text-gray-800
+          mb-12
+          capitalize
+          "
+        >
 
-<p className="
-text-center
-text-gray-500
-">
+          {slug.replaceAll("-", " ")}
 
-Aucun produit trouvé
-
-</p>
-
-)
-}
+        </h1>
 
 
 
-</div>
 
-</section>
 
-)
+        {
+          filteredProducts.length > 0 ? (
+
+
+            <div
+              className="
+              grid
+              grid-cols-1
+              sm:grid-cols-2
+              lg:grid-cols-3
+              xl:grid-cols-4
+              gap-6
+              "
+            >
+
+
+              {
+                filteredProducts.map((product) => (
+
+                  <ProductCard
+
+                    key={product.id}
+
+                    product={product}
+
+                  />
+
+                ))
+              }
+
+
+            </div>
+
+
+          ) : (
+
+
+            <p
+              className="
+              text-center
+              text-gray-500
+              text-lg
+              "
+            >
+
+              Aucun produit trouvé
+
+            </p>
+
+
+          )
+        }
+
+
+
+
+      </div>
+
+
+    </section>
+
+
+  );
 
 }

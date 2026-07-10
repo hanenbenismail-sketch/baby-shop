@@ -1,18 +1,19 @@
-import Link from "next/link";
-
 import Hero from "./components/Hero";
 import Categories from "./components/Categories";
+import FeaturedProducts from "./components/FeaturedProducts";
 import Features from "./components/Features";
-
-
+import SpecialOffers from "./components/SpecialOffers";
+import NewArrivals from "./components/NewArrivals";
+import BabyPacks from "./components/BabyPacks";
+import Testimonials from "./components/Testimonials";
 
 export default function Home(){
 
 
 return (
 
-<div>
 
+<div>
 
 
 {/* HERO */}
@@ -27,88 +28,34 @@ return (
 
 <Categories />
 
+{/* SPECIALOFFRES */}
+
+<SpecialOffers />
 
 
+{/* NewArrivals */}
+
+<NewArrivals />
+
+{/* FEATURED PRODUCTS */}
+
+<FeaturedProducts />
+
+
+{/* BabyPacks */}
+
+<BabyPacks />
+
+
+{/*Testimonials */}
+
+<Testimonials />
 
 
 {/* FEATURES */}
 
 <Features />
 
-
-
-
-
-
-
-{/* PRODUCTS INTRO */}
-
-<section
-className="
-max-w-7xl
-mx-auto
-px-6
-py-16
-text-center
-"
->
-
-
-<h2
-className="
-text-3xl
-md:text-4xl
-font-bold
-text-gray-800
-mb-4
-"
->
-
-🛍 Nos produits bébé
-
-</h2>
-
-
-
-<p
-className="
-text-gray-600
-mb-8
-"
->
-
-Découvrez notre collection vêtements,
-jouets et accessoires bébé.
-
-</p>
-
-
-
-
-<Link
-
-href="/products"
-
-className="
-bg-pink-500
-hover:bg-pink-600
-text-white
-px-8
-py-3
-rounded-full
-font-semibold
-transition
-"
-
->
-
-Voir tous les produits
-
-</Link>
-
-
-
-</section>
 
 
 
@@ -134,12 +81,14 @@ text-3xl
 font-bold
 text-center
 mb-8
+text-gray-800
 "
 >
 
 📍 Localisation de notre boutique
 
 </h2>
+
 
 
 
@@ -157,12 +106,15 @@ items-center
 
 
 
+
 <div
 className="
 bg-white
 shadow-lg
 rounded-3xl
 p-8
+border
+border-gray-100
 "
 >
 
@@ -172,42 +124,58 @@ className="
 text-2xl
 font-bold
 mb-4
+text-pink-500
 "
 >
 
-🍼 Baby Shop
+🍼 Baby-Shop
 
 </h3>
 
 
 
-<p className="mb-3">
+
+<p className="mb-3 text-gray-600">
 
 📌 Adresse :
+
 <br/>
+
 Cité Chebbi, Tozeur, Tunisie
 
 </p>
 
 
 
-<p className="mb-3">
+
+
+<p className="mb-3 text-gray-600">
 
 📞 Téléphone :
+
 <br/>
+
 +216 XX XXX XXX
 
 </p>
 
 
 
-<p className="mb-5">
+
+
+
+<p className="mb-5 text-gray-600">
 
 🕘 Horaires :
+
 <br/>
+
 Lundi - Samedi : 08:00 - 18:00
 
 </p>
+
+
+
 
 
 
@@ -218,14 +186,21 @@ href="https://www.google.com/maps"
 
 target="_blank"
 
+rel="noopener noreferrer"
+
 className="
-inline-block
-bg-blue-500
+inline-flex
+bg-gradient-to-r
+from-blue-500
+to-pink-500
 text-white
 px-6
 py-3
 rounded-full
-hover:bg-blue-600
+font-bold
+hover:scale-105
+transition
+shadow-md
 "
 
 >
@@ -236,6 +211,8 @@ Ouvrir Google Maps 📍
 
 
 
+
+
 </div>
 
 
@@ -244,7 +221,16 @@ Ouvrir Google Maps 📍
 
 
 
-<div>
+
+
+<div
+className="
+overflow-hidden
+rounded-3xl
+shadow-lg
+"
+>
+
 
 <iframe
 
@@ -255,8 +241,7 @@ width="100%"
 height="350"
 
 style={{
-border:0,
-borderRadius:"20px"
+border:0
 }}
 
 loading="lazy"
@@ -266,11 +251,18 @@ allowFullScreen
 ></iframe>
 
 
+
+</div>
+
+
+
+
+
+
 </div>
 
 
 
-</div>
 
 
 </section>
@@ -283,6 +275,7 @@ allowFullScreen
 </div>
 
 
-)
+);
+
 
 }

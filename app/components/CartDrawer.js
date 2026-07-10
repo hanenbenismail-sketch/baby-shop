@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 
 
 export default function CartDrawer(){
@@ -26,7 +27,13 @@ totalPrice
 
 
 
+const router = useRouter();
+
+
+
+
 if(!isCartOpen) return null;
+
 
 
 
@@ -40,12 +47,15 @@ return (
 onClick={closeCart}
 
 className="
-fixed inset-0
+fixed
+inset-0
 bg-black/40
 z-40
 "
 
 />
+
+
 
 
 
@@ -67,37 +77,68 @@ overflow-y-auto
 >
 
 
-<div className="flex justify-between mb-6">
 
-<h2 className="text-xl font-bold">
+<div
+className="
+flex
+justify-between
+mb-6
+"
+>
+
+
+<h2
+className="
+text-xl
+font-bold
+"
+>
+
 🛒 Mon Panier
+
 </h2>
+
 
 
 <button
 
 onClick={closeCart}
 
-className="text-2xl"
+className="
+text-2xl
+"
 
 >
+
 ×
+
 </button>
+
 
 
 </div>
 
 
 
+
+
+
+
 {
+
 cart.length === 0 ?
 
-<p>
+
+<p className="text-gray-500">
+
 Votre panier est vide
+
 </p>
 
 
+
 :
+
 
 cart.map(item=>(
 
@@ -107,7 +148,8 @@ cart.map(item=>(
 key={item.id}
 
 className="
-flex gap-4
+flex
+gap-4
 border-b
 py-4
 "
@@ -115,9 +157,12 @@ py-4
 >
 
 
+
 <img
 
 src={item.image}
+
+alt={item.name}
 
 className="
 w-20
@@ -130,41 +175,109 @@ rounded
 
 
 
-<div>
 
-<h3 className="font-bold">
+
+
+<div className="flex-1">
+
+
+
+<h3
+className="
+font-bold
+"
+>
+
 {item.name}
+
 </h3>
 
 
+
+
+
 <p>
+
 {item.price} TND
+
 </p>
 
 
-<div className="flex gap-3 mt-2">
+
+
+
+
+
+<div
+className="
+flex
+gap-3
+mt-2
+items-center
+"
+>
+
 
 
 <button
+
 onClick={()=>decreaseQuantity(item.id)}
+
+className="
+w-7
+h-7
+rounded
+bg-gray-100
+"
+
 >
+
 -
+
 </button>
 
 
-<span>
+
+
+
+<span className="font-bold">
+
 {item.quantity}
+
 </span>
 
 
+
+
+
+
 <button
+
 onClick={()=>increaseQuantity(item.id)}
+
+className="
+w-7
+h-7
+rounded
+bg-pink-500
+text-white
+"
+
 >
+
 +
+
 </button>
 
 
+
+
 </div>
+
+
+
+
+
 
 
 <button
@@ -174,14 +287,22 @@ onClick={()=>removeFromCart(item.id)}
 className="
 text-red-500
 text-sm
+mt-2
 "
 
 >
+
 Supprimer
+
 </button>
 
 
+
+
 </div>
+
+
+
 
 
 
@@ -190,26 +311,61 @@ Supprimer
 
 ))
 
+
 }
 
 
 
-<div className="mt-6 font-bold">
 
-Total : {totalPrice()} TND
+
+
+
+
+<div
+className="
+mt-6
+font-bold
+text-lg
+"
+>
+
+Total :
+
+<span className="text-pink-500">
+
+ {totalPrice()} TND
+
+</span>
+
 
 </div>
 
 
+
+
+
+
+
 <button
+
+onClick={()=>{
+
+closeCart();
+
+router.push("/cart");
+
+}}
 
 className="
 w-full
 bg-black
+hover:bg-gray-800
 text-white
 py-3
 rounded-xl
 mt-4
+font-bold
+transition
 "
 
 >
@@ -219,10 +375,17 @@ Voir le panier
 </button>
 
 
+
+
+
 </div>
 
 
+
+
+
 </>
+
 
 );
 

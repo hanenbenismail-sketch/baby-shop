@@ -1,10 +1,9 @@
 "use client";
 
-
-import {useContext} from "react";
-
-import {CartContext} from "../../context/CartContext";
-
+import { useContext } from "react";
+import { CartContext } from "@/context/CartContext";
+import Image from "next/image";
+import Link from "next/link";
 
 
 export default function Cart(){
@@ -24,12 +23,30 @@ totalPrice
 
 
 
+
 return (
 
-<div>
+
+<section
+className="
+max-w-6xl
+mx-auto
+px-4
+sm:px-6
+py-12
+"
+>
 
 
-<h1 className="mb-4">
+
+<h1
+className="
+text-3xl
+font-bold
+mb-8
+text-gray-800
+"
+>
 
 🛒 Mon Panier
 
@@ -37,48 +54,89 @@ return (
 
 
 
+
+
 {
 
-cart.length===0
+cart.length === 0 ?
 
-?
 
-<h3>
+<div
+className="
+text-center
+py-20
+text-gray-500
+text-xl
+"
+>
+
 Votre panier est vide
-</h3>
+
+</div>
+
 
 
 :
 
+
+<div
+className="
+space-y-5
+"
+>
+
+
+
+{
 
 cart.map(item=>(
 
 
 <div
 
-className="card mb-3"
-
 key={item.id}
+
+className="
+bg-white
+rounded-3xl
+border
+border-gray-100
+shadow-sm
+p-5
+flex
+flex-col
+sm:flex-row
+items-center
+gap-5
+"
 
 >
 
 
-<div className="card-body row align-items-center">
+{/* IMAGE */}
+
+<div
+className="
+relative
+w-32
+h-32
+rounded-2xl
+overflow-hidden
+"
+>
 
 
-<div className="col-md-3">
-
-
-<img
+<Image
 
 src={item.image}
 
-className="img-fluid"
+alt={item.name}
 
-style={{
-height:"120px",
-objectFit:"cover"
-}}
+fill
+
+className="
+object-cover
+"
 
 />
 
@@ -87,41 +145,82 @@ objectFit:"cover"
 
 
 
-<div className="col-md-3">
 
 
-<h5>
+
+{/* INFO */}
+
+
+<div
+className="
+flex-1
+"
+>
+
+
+<h2
+className="
+font-bold
+text-lg
+text-gray-800
+"
+>
 
 {item.name}
 
-</h5>
+</h2>
 
 
-<p>
+
+<p
+className="
+text-pink-500
+font-bold
+text-xl
+"
+>
 
 {item.price} TND
 
 </p>
 
 
+
 </div>
 
 
 
-<div className="col-md-3">
+
+
+
+
+{/* QUANTITY */}
+
+
+<div
+className="
+flex
+items-center
+gap-3
+"
+>
+
 
 
 <button
 
-className="btn btn-secondary"
-
 onClick={()=>updateQuantity(
-
 item.id,
-
 item.quantity-1
-
 )}
+
+className="
+w-9
+h-9
+rounded-xl
+bg-gray-100
+font-bold
+"
 
 >
 
@@ -130,24 +229,33 @@ item.quantity-1
 </button>
 
 
-<span className="mx-3">
+
+
+<span className="font-bold">
 
 {item.quantity}
 
 </span>
 
 
+
+
+
 <button
 
-className="btn btn-primary"
-
 onClick={()=>updateQuantity(
-
 item.id,
-
 item.quantity+1
-
 )}
+
+className="
+w-9
+h-9
+rounded-xl
+bg-pink-500
+text-white
+font-bold
+"
 
 >
 
@@ -156,18 +264,32 @@ item.quantity+1
 </button>
 
 
+
+
 </div>
 
 
 
-<div className="col-md-3">
+
+
+
+
+{/* REMOVE */}
 
 
 <button
 
-className="btn btn-danger"
-
 onClick={()=>removeFromCart(item.id)}
+
+className="
+bg-red-500
+hover:bg-red-600
+text-white
+px-4
+py-2
+rounded-xl
+transition
+"
 
 >
 
@@ -176,10 +298,6 @@ Supprimer
 </button>
 
 
-</div>
-
-
-</div>
 
 
 </div>
@@ -192,16 +310,89 @@ Supprimer
 
 
 
-<h3 className="text-end mt-4">
 
-Total : {totalPrice()} TND
 
-</h3>
+
+
+{/* TOTAL + CHECKOUT */}
+
+
+<div
+className="
+mt-8
+flex
+flex-col
+items-end
+gap-5
+"
+>
+
+
+<div
+className="
+text-2xl
+font-bold
+text-gray-800
+"
+>
+
+Total :
+
+<span className="text-pink-500">
+
+ {totalPrice()} TND
+
+</span>
+
+
+</div>
+
+
+
+
+
+<Link
+
+href="/checkout"
+
+className="
+bg-pink-500
+hover:bg-pink-600
+text-white
+px-8
+py-3
+rounded-xl
+font-bold
+transition
+"
+
+>
+
+Passer la commande
+
+</Link>
+
 
 
 
 </div>
 
-)
+
+
+
+
+
+</div>
+
+
+}
+
+
+
+</section>
+
+
+);
+
 
 }
