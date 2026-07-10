@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -67,6 +68,7 @@ px-6
 
 
 
+
 <h2
 className="
 text-3xl
@@ -110,7 +112,7 @@ grid
 grid-cols-1
 sm:grid-cols-2
 lg:grid-cols-4
-gap-6
+gap-8
 "
 >
 
@@ -128,17 +130,27 @@ className="
 bg-white
 rounded-3xl
 overflow-hidden
+border
+border-gray-100
 shadow-sm
 hover:shadow-xl
 transition
+flex
+flex-col
+h-full
 "
+
 >
 
+
+{/* IMAGE FIXE */}
 
 <div
 className="
 relative
 h-56
+w-full
+overflow-hidden
 "
 >
 
@@ -153,6 +165,9 @@ fill
 
 className="
 object-cover
+hover:scale-105
+transition
+duration-300
 "
 
 />
@@ -165,11 +180,19 @@ object-cover
 
 
 
+
+{/* CONTENT */}
+
+
 <div
 className="
 p-5
+flex
+flex-col
+flex-1
 "
 >
+
 
 
 <h3
@@ -177,7 +200,7 @@ className="
 text-xl
 font-bold
 text-gray-800
-mb-2
+mb-3
 "
 >
 
@@ -188,10 +211,13 @@ mb-2
 
 
 
+
 <p
 className="
 text-gray-600
-mb-5
+text-sm
+line-clamp-2
+mb-6
 "
 >
 
@@ -203,18 +229,21 @@ mb-5
 
 
 
+
+
 <Link
 
 href={pack.link}
 
 className="
-inline-flex
+mt-auto
+w-full
+text-center
 bg-pink-500
 hover:bg-pink-600
 text-white
-px-5
-py-2
-rounded-full
+py-3
+rounded-xl
 font-semibold
 transition
 "
@@ -234,6 +263,7 @@ Découvrir
 
 
 
+
 </div>
 
 
@@ -245,8 +275,6 @@ Découvrir
 
 
 </div>
-
-
 
 
 
