@@ -35,15 +35,12 @@ export default function ProductDetails() {
         text-red-500
         "
       >
-
         Produit introuvable
-
       </div>
 
     );
 
   }
-
 
 
 
@@ -55,11 +52,17 @@ export default function ProductDetails() {
 
   return (
 
-    <ProductView product={product} images={images} addToCart={addToCart}/>
+    <ProductView
+      product={product}
+      images={images}
+      addToCart={addToCart}
+    />
 
   );
 
 }
+
+
 
 
 
@@ -146,6 +149,7 @@ object-cover
 
 
 
+
 <div
 className="
 flex
@@ -156,9 +160,7 @@ flex-wrap
 >
 
 
-{
-images.map((img,index)=>(
-
+{images.map((img,index)=>(
 
 <button
 
@@ -173,13 +175,14 @@ h-20
 rounded-xl
 overflow-hidden
 border-2
-${selectedImage===img
+${
+selectedImage===img
 ?"border-pink-500"
-:"border-gray-200"}
+:"border-gray-200"
+}
 `}
 
 >
-
 
 <Image
 
@@ -193,19 +196,16 @@ className="object-cover"
 
 />
 
-
 </button>
 
-
-))
-}
+))}
 
 
 </div>
 
 
-
 </div>
+
 
 
 
@@ -234,16 +234,14 @@ text-gray-800
 mb-4
 "
 >
-
 {product.name}
-
 </h1>
 
 
 
 
-<div className="flex gap-3 items-center mb-5">
 
+<div className="flex gap-3 items-center mb-5">
 
 <span
 className="
@@ -252,14 +250,11 @@ font-bold
 text-pink-500
 "
 >
-
 {product.price} DT
-
 </span>
 
 
-{
-product.oldPrice &&
+{product.oldPrice && (
 
 <span
 className="
@@ -267,15 +262,13 @@ text-gray-400
 line-through
 "
 >
-
 {product.oldPrice} DT
-
 </span>
 
-}
-
+)}
 
 </div>
+
 
 
 
@@ -286,19 +279,17 @@ text-gray-600
 mb-5
 "
 >
-
 {product.description}
-
 </p>
+
 
 
 
 
 <p className="mb-4">
-
 ⭐ {product.rating}/5
-
 </p>
+
 
 
 
@@ -306,10 +297,9 @@ mb-5
 <p className="font-semibold mb-5">
 
 Stock :
+
 <span className="text-green-600">
-
  {product.stock}
-
 </span>
 
 </p>
@@ -319,8 +309,13 @@ Stock :
 
 
 
-{
-product.sizes &&
+
+
+
+
+{/* SIZE */}
+
+{product.sizes?.length > 0 && (
 
 <div className="mb-5">
 
@@ -331,9 +326,7 @@ Taille
 
 <div className="flex gap-3 flex-wrap">
 
-
-{
-product.sizes.map(s=>(
+{product.sizes.map((s)=>(
 
 <button
 
@@ -347,9 +340,11 @@ py-2
 rounded-xl
 border
 transition
-${size===s
+${
+size===s
 ?"bg-pink-500 text-white"
-:"bg-white"}
+:"bg-white"
+}
 `}
 
 >
@@ -358,16 +353,14 @@ ${size===s
 
 </button>
 
-))
+))}
 
-}
+</div>
 
 
 </div>
 
-</div>
-
-}
+)}
 
 
 
@@ -375,26 +368,24 @@ ${size===s
 
 
 
-{
-product.colors &&
+
+
+{/* COLOR */}
+
+{product.colors?.length > 0 && (
 
 <div className="mb-6">
 
 
 <h3 className="font-bold mb-2">
-
 Couleur
-
 </h3>
-
 
 
 <div className="flex gap-3 flex-wrap">
 
 
-{
-product.colors.map(c=>(
-
+{product.colors.map((c)=>(
 
 <button
 
@@ -408,9 +399,11 @@ py-2
 rounded-xl
 border
 transition
-${color===c
+${
+color===c
 ?"bg-blue-500 text-white"
-:"bg-white"}
+:"bg-white"
+}
 `}
 
 >
@@ -419,10 +412,7 @@ ${color===c
 
 </button>
 
-
-))
-
-}
+))}
 
 
 </div>
@@ -430,7 +420,10 @@ ${color===c
 
 </div>
 
-}
+)}
+
+
+
 
 
 
@@ -463,6 +456,7 @@ transition
 
 
 </div>
+
 
 
 </div>

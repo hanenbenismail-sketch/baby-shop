@@ -1,41 +1,48 @@
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 
 const packs = [
 
 {
+id:1,
 title:"Pack Naissance 👶",
 description:"Les essentiels pour accueillir votre bébé.",
 image:"/images/pack-naissance.jpg",
 link:"/products"
 },
 
-
 {
+id:2,
 title:"Pack Sommeil 💤",
 description:"Pyjamas, couvertures et accessoires confort.",
 image:"/images/pack-sommeil.jpg",
 link:"/products"
 },
 
-
 {
+id:3,
 title:"Pack Cadeau 🎁",
 description:"Une idée cadeau parfaite pour bébé.",
 image:"/images/pack-cadeau.jpg",
 link:"/products"
 },
 
-
 {
+id:4,
 title:"Pack Sortie bébé 🚼",
 description:"Tout pour les sorties avec bébé.",
 image:"/images/pack-sortie.jpg",
 link:"/products"
 }
-
 
 ];
 
@@ -64,8 +71,6 @@ mx-auto
 px-6
 "
 >
-
-
 
 
 
@@ -106,25 +111,61 @@ Des packs préparés spécialement pour vos besoins
 
 
 
-<div
-className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-4
-gap-8
-"
->
+<Swiper
 
+modules={[Navigation,Autoplay]}
+
+navigation={true}
+
+loop={true}
+
+grabCursor={true}
+
+autoplay={{
+
+delay:2500,
+
+disableOnInteraction:false
+
+}}
+
+spaceBetween={24}
+
+
+breakpoints={
 
 {
 
-packs.map((pack,index)=>(
+0:{
+slidesPerView:1
+},
+
+640:{
+slidesPerView:2
+},
+
+1024:{
+slidesPerView:3
+}
+
+}
+
+}
+
+>
+
+
+
+
+
+{
+packs.map((pack)=>(
+
+
+<SwiperSlide key={pack.id}>
 
 
 <div
-
-key={index}
 
 className="
 bg-white
@@ -135,23 +176,22 @@ border-gray-100
 shadow-sm
 hover:shadow-xl
 transition
-flex
-flex-col
 h-full
 "
 
 >
 
 
-{/* IMAGE FIXE */}
+{/* IMAGE */}
 
 <div
+
 className="
 relative
-h-56
+h-64
 w-full
-overflow-hidden
 "
+
 >
 
 
@@ -167,7 +207,7 @@ className="
 object-cover
 hover:scale-105
 transition
-duration-300
+duration-500
 "
 
 />
@@ -183,25 +223,24 @@ duration-300
 
 {/* CONTENT */}
 
-
 <div
+
 className="
 p-5
-flex
-flex-col
-flex-1
 "
+
 >
 
 
-
 <h3
+
 className="
 text-xl
 font-bold
 text-gray-800
 mb-3
 "
+
 >
 
 {pack.title}
@@ -211,14 +250,14 @@ mb-3
 
 
 
-
 <p
+
 className="
 text-gray-600
 text-sm
-line-clamp-2
-mb-6
+mb-5
 "
+
 >
 
 {pack.description}
@@ -236,8 +275,7 @@ mb-6
 href={pack.link}
 
 className="
-mt-auto
-w-full
+block
 text-center
 bg-pink-500
 hover:bg-pink-600
@@ -256,8 +294,6 @@ Découvrir
 
 
 
-
-
 </div>
 
 
@@ -265,16 +301,19 @@ Découvrir
 
 
 </div>
+
+
+</SwiperSlide>
 
 
 ))
-
 
 }
 
 
 
-</div>
+
+</Swiper>
 
 
 

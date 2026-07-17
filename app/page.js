@@ -7,6 +7,7 @@ import NewArrivals from "./components/NewArrivals";
 import BabyPacks from "./components/BabyPacks";
 import Testimonials from "./components/Testimonials";
 
+
 export default function Home(){
 
 

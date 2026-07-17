@@ -1,5 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 const categories = [
   {
@@ -57,6 +65,7 @@ export default function Categories() {
     "
     >
       <div className="max-w-7xl mx-auto">
+
         <h2
           className="
           text-3xl
@@ -79,87 +88,121 @@ export default function Categories() {
           mx-auto
         "
         >
-          Découvrez tous les univers dédiés au confort et au bien-être de votre
-          bébé.
+          Découvrez tous les univers dédiés au confort et au bien-être de votre bébé.
         </p>
 
-        <div
-          className="
-          grid
-          grid-cols-2
-          md:grid-cols-4
-          gap-5
-          md:gap-7
-        "
+
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          navigation
+          loop={true}
+
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+
+          spaceBetween={24}
+
+          breakpoints={{
+            0: {
+              slidesPerView: 2,
+            },
+
+            640: {
+              slidesPerView: 2,
+            },
+
+            768: {
+              slidesPerView: 3,
+            },
+
+            1024: {
+              slidesPerView: 4,
+            },
+          }}
         >
+
           {categories.map((category) => (
-            <Link
-              key={category.slug}
-              href={`/categories/${category.slug}`}
-              className="
-              group
-              relative
-              h-52
-              md:h-64
-              rounded-3xl
-              overflow-hidden
-              border
-              border-pink-100
-              shadow-sm
-              hover:shadow-2xl
-              transition-all
-              duration-300
-            "
-            >
-              <Image
-                src={category.image}
-                alt={category.name}
-                fill
-                className="
-                object-cover
-                group-hover:scale-110
-                transition-transform
-                duration-500
-              "
-              />
 
-              {/* Overlay */}
-              <div
-                className="
-                absolute
-                inset-0
-                bg-gradient-to-t
-                from-black/70
-                via-black/20
-                to-transparent
-              "
-              />
+            <SwiperSlide key={category.slug}>
 
-              {/* Title */}
-              <div
+              <Link
+                href={`/categories/${category.slug}`}
                 className="
-                absolute
-                bottom-4
-                left-4
-                right-4
+                group
+                relative
+                block
+                h-52
+                md:h-64
+                rounded-3xl
+                overflow-hidden
+                border
+                border-pink-100
+                shadow-sm
+                hover:shadow-2xl
+                transition-all
+                duration-300
               "
               >
-                <h3
+
+                <Image
+                  src={category.image}
+                  alt={category.name}
+                  fill
                   className="
-                  text-white
-                  text-base
-                  md:text-lg
-                  font-bold
-                  drop-shadow-lg
-                  text-center
+                  object-cover
+                  group-hover:scale-110
+                  transition-transform
+                  duration-500
+                "
+                />
+
+
+                <div
+                  className="
+                  absolute
+                  inset-0
+                  bg-gradient-to-t
+                  from-black/70
+                  via-black/20
+                  to-transparent
+                "
+                />
+
+
+                <div
+                  className="
+                  absolute
+                  bottom-4
+                  left-4
+                  right-4
                 "
                 >
-                  {category.name}
-                </h3>
-              </div>
-            </Link>
+
+                  <h3
+                    className="
+                    text-white
+                    text-base
+                    md:text-lg
+                    font-bold
+                    drop-shadow-lg
+                    text-center
+                  "
+                  >
+                    {category.name}
+                  </h3>
+
+                </div>
+
+              </Link>
+
+            </SwiperSlide>
+
           ))}
-        </div>
+
+        </Swiper>
+
       </div>
     </section>
   );
