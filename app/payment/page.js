@@ -501,10 +501,9 @@ py-3
 
 <span>
 
-{item.name} × {item.quantity}
+{item.name?.[language]} × {item.quantity}
 
 </span>
-
 
 
 <span>
