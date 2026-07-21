@@ -9,39 +9,89 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
+import { useLanguage } from "@/context/LanguageContext";
+
+
 
 const packs = [
 
 {
 id:1,
-title:"Pack Naissance 👶",
-description:"Les essentiels pour accueillir votre bébé.",
-image:"/images/pack-naissance.jpg",
-link:"/products"
+
+title:{
+fr:"Pack Naissance 👶",
+en:"Birth Pack 👶",
+ar:"حزمة الولادة 👶"
 },
+
+description:{
+fr:"Les essentiels pour accueillir votre bébé.",
+en:"Everything needed to welcome your baby.",
+ar:"كل الأساسيات لاستقبال طفلك."
+},
+
+image:"/images/pack-naissance.jpg"
+
+},
+
 
 {
 id:2,
-title:"Pack Sommeil 💤",
-description:"Pyjamas, couvertures et accessoires confort.",
-image:"/images/pack-sommeil.jpg",
-link:"/products"
+
+title:{
+fr:"Pack Sommeil 💤",
+en:"Sleep Pack 💤",
+ar:"حزمة النوم 💤"
 },
+
+description:{
+fr:"Pyjamas, couvertures et accessoires confort.",
+en:"Pajamas, blankets and comfort accessories.",
+ar:"ملابس نوم، بطانيات وإكسسوارات مريحة."
+},
+
+image:"/images/pack-sommeil.jpg"
+
+},
+
 
 {
 id:3,
-title:"Pack Cadeau 🎁",
-description:"Une idée cadeau parfaite pour bébé.",
-image:"/images/pack-cadeau.jpg",
-link:"/products"
+
+title:{
+fr:"Pack Cadeau 🎁",
+en:"Gift Pack 🎁",
+ar:"حزمة هدية 🎁"
 },
+
+description:{
+fr:"Une idée cadeau parfaite pour bébé.",
+en:"A perfect gift idea for your baby.",
+ar:"فكرة هدية مثالية لطفلك."
+},
+
+image:"/images/pack-cadeau.jpg"
+
+},
+
 
 {
 id:4,
-title:"Pack Sortie bébé 🚼",
-description:"Tout pour les sorties avec bébé.",
-image:"/images/pack-sortie.jpg",
-link:"/products"
+
+title:{
+fr:"Pack Sortie bébé 🚼",
+en:"Baby Outing Pack 🚼",
+ar:"حزمة الخروج للطفل 🚼"
+},
+
+description:{
+fr:"Tout pour les sorties avec bébé.",
+en:"Everything for baby outings.",
+ar:"كل ما تحتاجه للخروج مع الطفل."
+},
+
+image:"/images/pack-sortie.jpg"
+
 }
 
 ];
@@ -53,8 +103,11 @@ link:"/products"
 export default function BabyPacks(){
 
 
-return (
+const {language}=useLanguage();
 
+
+
+return (
 
 <section
 className="
@@ -73,7 +126,6 @@ px-6
 >
 
 
-
 <h2
 className="
 text-3xl
@@ -85,10 +137,16 @@ mb-4
 "
 >
 
-🎁 Packs bébé
+🎁 {language==="fr"
+?"Packs bébé"
+:
+language==="en"
+?"Baby Packs"
+:
+"حزم الأطفال"
+}
 
 </h2>
-
 
 
 
@@ -101,11 +159,19 @@ mb-10
 "
 >
 
-Des packs préparés spécialement pour vos besoins
+{
+language==="fr"
+?
+"Des packs préparés spécialement pour vos besoins"
+:
+language==="en"
+?
+"Special packs prepared for your needs"
+:
+"حزم خاصة مجهزة حسب احتياجاتك"
+}
 
 </p>
-
-
 
 
 
@@ -115,26 +181,21 @@ Des packs préparés spécialement pour vos besoins
 
 modules={[Navigation,Autoplay]}
 
-navigation={true}
+navigation
 
-loop={true}
+loop
 
-grabCursor={true}
+grabCursor
 
 autoplay={{
-
 delay:2500,
-
 disableOnInteraction:false
-
 }}
 
 spaceBetween={24}
 
 
-breakpoints={
-
-{
+breakpoints={{
 
 0:{
 slidesPerView:1
@@ -148,14 +209,9 @@ slidesPerView:2
 slidesPerView:3
 }
 
-}
-
-}
+}}
 
 >
-
-
-
 
 
 {
@@ -182,8 +238,6 @@ h-full
 >
 
 
-{/* IMAGE */}
-
 <div
 
 className="
@@ -199,7 +253,7 @@ w-full
 
 src={pack.image}
 
-alt={pack.title}
+alt={pack.title[language]}
 
 fill
 
@@ -219,31 +273,23 @@ duration-500
 
 
 
-
-
-{/* CONTENT */}
-
 <div
-
 className="
 p-5
 "
-
 >
 
 
 <h3
-
 className="
 text-xl
 font-bold
 text-gray-800
 mb-3
 "
-
 >
 
-{pack.title}
+{pack.title[language]}
 
 </h3>
 
@@ -251,16 +297,14 @@ mb-3
 
 
 <p
-
 className="
 text-gray-600
 text-sm
 mb-5
 "
-
 >
 
-{pack.description}
+{pack.description[language]}
 
 </p>
 
@@ -268,11 +312,9 @@ mb-5
 
 
 
-
-
 <Link
 
-href={pack.link}
+href="/products"
 
 className="
 block
@@ -288,16 +330,23 @@ transition
 
 >
 
-Découvrir
+{
+language==="fr"
+?
+"Découvrir"
+:
+language==="en"
+?
+"Discover"
+:
+"اكتشف"
+}
 
 </Link>
 
 
 
 </div>
-
-
-
 
 
 </div>
@@ -311,12 +360,7 @@ Découvrir
 }
 
 
-
-
 </Swiper>
-
-
-
 
 
 </div>
@@ -324,8 +368,6 @@ Découvrir
 
 </section>
 
-
 );
-
 
 }

@@ -1,0 +1,16 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "products": "Produits",
+    "categories": "Catégories",
+    "cart": "Panier",
+    "login": "Connexion"
+    
+  },
+
+  "hero": {
+    "title": "Tout pour votre bébé",
+    "description": "Vêtements, jouets et accessoires bébé",
+    "button": "Découvrir"
+  }
+}

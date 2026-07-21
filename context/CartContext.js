@@ -2,10 +2,10 @@
 
 
 import {
-  createContext,
-  useState,
-  useContext,
-  useEffect
+createContext,
+useState,
+useContext,
+useEffect
 } from "react";
 
 
@@ -16,9 +16,11 @@ export const CartContext = createContext();
 
 export function useCart(){
 
-  return useContext(CartContext);
+return useContext(CartContext);
 
 }
+
+
 
 
 
@@ -26,9 +28,7 @@ export function useCart(){
 export default function CartProvider({children}){
 
 
-
 const [cart,setCart]=useState([]);
-
 
 const [isCartOpen,setIsCartOpen]=useState(false);
 
@@ -36,17 +36,23 @@ const [isCartOpen,setIsCartOpen]=useState(false);
 
 
 
-// تحميل السلة من localStorage
+// LOAD CART
 
 useEffect(()=>{
 
 
-const savedCart = localStorage.getItem("baby-cart");
+if(typeof window !== "undefined"){
 
 
-if(savedCart){
+const saved = localStorage.getItem("baby-cart");
 
-setCart(JSON.parse(savedCart));
+
+if(saved){
+
+setCart(JSON.parse(saved));
+
+}
+
 
 }
 
@@ -60,19 +66,27 @@ setCart(JSON.parse(savedCart));
 
 
 
-// حفظ السلة
+// SAVE CART
 
 useEffect(()=>{
 
 
+if(typeof window !== "undefined"){
+
+
 localStorage.setItem(
+
 "baby-cart",
+
 JSON.stringify(cart)
+
 );
 
 
-},[cart]);
+}
 
+
+},[cart]);
 
 
 
@@ -108,11 +122,20 @@ function addToCart(product){
 
 
 
-const exist = cart.find(
+setCart(prevCart=>{
 
-item => item.id === product.id
+
+
+const exist = prevCart.find(item=>
+
+item.id === product.id &&
+
+item.selectedSize === product.selectedSize &&
+
+item.selectedColor === product.selectedColor
 
 );
+
 
 
 
@@ -121,12 +144,14 @@ item => item.id === product.id
 if(exist){
 
 
-setCart(
 
-cart.map(item =>
+return prevCart.map(item=>
 
+item.id === product.id &&
 
-item.id === product.id
+item.selectedSize === product.selectedSize &&
+
+item.selectedColor === product.selectedColor
 
 ?
 
@@ -143,22 +168,23 @@ quantity:item.quantity + 1
 item
 
 
-)
-
-
 );
 
 
 
 }
 
-else{
 
 
 
-setCart([
 
-...cart,
+
+
+return [
+
+
+...prevCart,
+
 
 {
 
@@ -168,19 +194,19 @@ quantity:1
 
 }
 
-]
+
+];
 
 
-);
 
 
-
-}
+});
 
 
 
 
 openCart();
+
 
 
 }
@@ -196,13 +222,11 @@ openCart();
 function increaseQuantity(id){
 
 
+setCart(prev=>
 
-setCart(
+prev.map(item=>
 
-cart.map(item=>
-
-
-item.id === id
+item.id===id
 
 ?
 
@@ -210,7 +234,7 @@ item.id === id
 
 ...item,
 
-quantity:item.quantity + 1
+quantity:item.quantity+1
 
 }
 
@@ -238,15 +262,13 @@ item
 function decreaseQuantity(id){
 
 
+setCart(prev=>
 
-setCart(
+prev
 
+.map(item=>
 
-cart.map(item=>
-
-
-item.id === id
-
+item.id===id
 
 ?
 
@@ -254,21 +276,18 @@ item.id === id
 
 ...item,
 
-quantity:item.quantity - 1
+quantity:item.quantity-1
 
 }
 
-
 :
-
 
 item
 
 
 )
 
-.filter(item=>item.quantity > 0)
-
+.filter(item=>item.quantity>0)
 
 
 );
@@ -276,8 +295,6 @@ item
 
 
 }
-
-
 
 
 
@@ -290,19 +307,16 @@ item
 function removeFromCart(id){
 
 
+setCart(prev=>
 
-setCart(
+prev.filter(item=>
 
-
-cart.filter(
-
-item=>item.id !== id
+item.id!==id
 
 )
 
 
 );
-
 
 
 }
@@ -318,10 +332,15 @@ item=>item.id !== id
 function clearCart(){
 
 
-
 setCart([]);
 
+
+if(typeof window !== "undefined"){
+
 localStorage.removeItem("baby-cart");
+
+}
+
 
 closeCart();
 
@@ -339,12 +358,13 @@ closeCart();
 function totalPrice(){
 
 
-
 return cart.reduce(
 
 (total,item)=>
 
-total + item.price * item.quantity,
+total +
+
+(item.price * item.quantity),
 
 0
 
@@ -362,7 +382,6 @@ total + item.price * item.quantity,
 
 
 function cartCount(){
-
 
 
 return cart.reduce(
@@ -389,9 +408,7 @@ total + item.quantity,
 return (
 
 
-
 <CartContext.Provider
-
 
 
 value={{
@@ -434,7 +451,6 @@ closeCart
 }}
 
 
-
 >
 
 
@@ -444,9 +460,7 @@ closeCart
 </CartContext.Provider>
 
 
-
 );
-
 
 
 }

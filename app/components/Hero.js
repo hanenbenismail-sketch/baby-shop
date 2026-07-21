@@ -3,23 +3,71 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { useLanguage } from "@/context/LanguageContext";
+
+
+
+const translations = {
+
+fr:{
+welcome:"Bienvenue chez BABY-SHOP 🍼",
+title:"Tout pour le confort de votre bébé",
+description:
+"Découvrez nos vêtements bébé, jouets et accessoires sélectionnés avec soin pour votre petit trésor.",
+button:"Découvrir les produits 🛒"
+},
+
+
+en:{
+welcome:"Welcome to BABY-SHOP 🍼",
+title:"Everything for your baby's comfort",
+description:
+"Discover our baby clothes, toys and accessories carefully selected for your little treasure.",
+button:"Discover products 🛒"
+},
+
+
+ar:{
+welcome:"مرحبا بكم في BABY-SHOP 🍼",
+title:"كل ما يحتاجه طفلك لراحته",
+description:
+"اكتشف ملابس الأطفال والألعاب والإكسسوارات المختارة بعناية لطفلك.",
+button:"اكتشف المنتجات 🛒"
+}
+
+};
+
+
+
+
 
 export default function Hero(){
 
 
+const {language}=useLanguage();
+
+
+const t=translations[language];
+
+
+
 return (
 
+
 <section
+
 className="
 max-w-7xl
 mx-auto
 px-6
 py-12
 "
+
 >
 
 
 <div
+
 className="
 bg-gradient-to-r
 from-pink-100
@@ -36,7 +84,12 @@ p-8
 md:p-12
 gap-8
 "
+
+dir={language==="ar" ? "rtl" : "ltr"}
+
 >
+
+
 
 
 
@@ -44,25 +97,34 @@ gap-8
 
 
 <div
+
 className="
 max-w-xl
 "
+
 >
 
 
 <p
+
 className="
 text-pink-500
 font-semibold
 mb-3
 "
+
 >
-Bienvenue chez BABY-SHOP 🍼
+
+{t.welcome}
+
 </p>
 
 
 
+
+
 <h1
+
 className="
 text-4xl
 md:text-6xl
@@ -70,29 +132,33 @@ font-extrabold
 text-gray-800
 leading-tight
 "
+
 >
 
-Tout pour le confort
-de votre bébé
+{t.title}
 
 </h1>
 
 
 
+
+
 <p
+
 className="
 text-gray-600
 text-lg
 mt-5
 mb-8
 "
+
 >
 
-Découvrez nos vêtements bébé,
-jouets et accessoires sélectionnés
-avec soin pour votre petit trésor.
+{t.description}
 
 </p>
+
+
 
 
 
@@ -117,9 +183,11 @@ shadow-lg
 
 >
 
-Découvrir les produits 🛒
+{t.button}
 
 </Link>
+
+
 
 
 
@@ -131,10 +199,13 @@ Découvrir les produits 🛒
 
 
 
+
+
 {/* IMAGE */}
 
 
 <div
+
 className="
 relative
 w-full
@@ -142,6 +213,7 @@ md:w-1/2
 h-[300px]
 md:h-[450px]
 "
+
 >
 
 
@@ -160,20 +232,23 @@ object-cover
 rounded-3xl
 "
 
- />
+/>
+
+
+</div>
+
+
+
+
 
 
 
 </div>
 
-
-
-
-
-</div>
 
 
 </section>
+
 
 );
 

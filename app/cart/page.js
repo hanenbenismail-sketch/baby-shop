@@ -1,9 +1,46 @@
 "use client";
 
-import { useContext } from "react";
-import { CartContext } from "@/context/CartContext";
+import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContext";
+
 import Image from "next/image";
 import Link from "next/link";
+
+
+
+const translations = {
+
+fr:{
+title:"🛒 Mon Panier",
+empty:"Votre panier est vide",
+remove:"Supprimer",
+total:"Total",
+checkout:"Passer la commande"
+},
+
+
+en:{
+title:"🛒 My Cart",
+empty:"Your cart is empty",
+remove:"Remove",
+total:"Total",
+checkout:"Checkout"
+},
+
+
+ar:{
+title:"🛒 سلتي",
+empty:"السلة فارغة",
+remove:"حذف",
+total:"المجموع",
+checkout:"إتمام الطلب"
+}
+
+};
+
+
+
+
 
 
 export default function Cart(){
@@ -15,11 +52,22 @@ cart,
 
 removeFromCart,
 
-updateQuantity,
+increaseQuantity,
+
+decreaseQuantity,
 
 totalPrice
 
-}=useContext(CartContext);
+}=useCart();
+
+
+
+
+const {language}=useLanguage();
+
+
+const t=translations[language];
+
 
 
 
@@ -28,6 +76,9 @@ return (
 
 
 <section
+
+dir={language==="ar" ? "rtl":"ltr"}
+
 className="
 max-w-6xl
 mx-auto
@@ -35,20 +86,23 @@ px-4
 sm:px-6
 py-12
 "
+
 >
 
 
 
 <h1
+
 className="
 text-3xl
 font-bold
 mb-8
 text-gray-800
 "
+
 >
 
-🛒 Mon Panier
+{t.title}
 
 </h1>
 
@@ -56,40 +110,40 @@ text-gray-800
 
 
 
+
 {
 
-cart.length === 0 ?
+cart.length===0 ?
 
 
 <div
+
 className="
 text-center
 py-20
 text-gray-500
 text-xl
 "
+
 >
 
-Votre panier est vide
+{t.empty}
 
 </div>
 
 
 
+
 :
 
-
-<div
-className="
-space-y-5
-"
->
-
+<div className="space-y-5">
 
 
 {
 
-cart.map(item=>(
+
+cart.map((item)=>(
+
 
 
 <div
@@ -113,9 +167,13 @@ gap-5
 >
 
 
+
+
+
 {/* IMAGE */}
 
 <div
+
 className="
 relative
 w-32
@@ -123,6 +181,7 @@ h-32
 rounded-2xl
 overflow-hidden
 "
+
 >
 
 
@@ -130,7 +189,19 @@ overflow-hidden
 
 src={item.image}
 
-alt={item.name}
+alt={
+
+typeof item.name==="object"
+
+?
+
+item.name[language]
+
+:
+
+item.name
+
+}
 
 fill
 
@@ -148,36 +219,53 @@ object-cover
 
 
 
+
+
 {/* INFO */}
 
 
-<div
-className="
-flex-1
-"
->
+<div className="flex-1">
 
 
 <h2
+
 className="
 font-bold
 text-lg
 text-gray-800
 "
+
 >
 
-{item.name}
+
+{
+
+typeof item.name==="object"
+
+?
+
+item.name[language]
+
+:
+
+item.name
+
+}
+
 
 </h2>
 
 
 
+
 <p
+
 className="
 text-pink-500
 font-bold
 text-xl
 "
+
 >
 
 {item.price} TND
@@ -194,25 +282,26 @@ text-xl
 
 
 
+
+
 {/* QUANTITY */}
 
 
+
 <div
+
 className="
 flex
 items-center
 gap-3
 "
->
 
+>
 
 
 <button
 
-onClick={()=>updateQuantity(
-item.id,
-item.quantity-1
-)}
+onClick={()=>decreaseQuantity(item.id)}
 
 className="
 w-9
@@ -231,6 +320,8 @@ font-bold
 
 
 
+
+
 <span className="font-bold">
 
 {item.quantity}
@@ -241,12 +332,10 @@ font-bold
 
 
 
+
 <button
 
-onClick={()=>updateQuantity(
-item.id,
-item.quantity+1
-)}
+onClick={()=>increaseQuantity(item.id)}
 
 className="
 w-9
@@ -274,7 +363,9 @@ font-bold
 
 
 
+
 {/* REMOVE */}
+
 
 
 <button
@@ -288,19 +379,20 @@ text-white
 px-4
 py-2
 rounded-xl
-transition
 "
 
 >
 
-Supprimer
+{t.remove}
 
 </button>
 
 
 
 
+
 </div>
+
 
 
 ))
@@ -314,10 +406,13 @@ Supprimer
 
 
 
-{/* TOTAL + CHECKOUT */}
+
+{/* TOTAL */}
+
 
 
 <div
+
 className="
 mt-8
 flex
@@ -325,27 +420,36 @@ flex-col
 items-end
 gap-5
 "
+
 >
+
 
 
 <div
+
 className="
 text-2xl
 font-bold
-text-gray-800
 "
+
 >
 
-Total :
+
+{t.total} :
+
 
 <span className="text-pink-500">
 
- {totalPrice()} TND
+{totalPrice()} TND
 
 </span>
 
 
+
 </div>
+
+
+
 
 
 
@@ -363,33 +467,37 @@ px-8
 py-3
 rounded-xl
 font-bold
-transition
 "
 
 >
 
-Passer la commande
+{t.checkout}
 
 </Link>
 
 
 
 
-</div>
-
-
-
-
 
 
 </div>
+
+
+
+
+
+
+</div>
+
 
 
 }
 
 
 
+
 </section>
+
 
 
 );

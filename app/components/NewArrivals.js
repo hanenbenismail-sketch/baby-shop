@@ -5,11 +5,53 @@ import Link from "next/link";
 import ProductsCarousel from "./ProductsCarousel";
 import products from "@/app/data/products";
 
+import { useLanguage } from "@/context/LanguageContext";
+
+
+
+const translations = {
+
+  fr:{
+    title:"🆕 Nouveautés bébé",
+    description:"Découvrez nos derniers produits ajoutés",
+    button:"Voir les nouveautés"
+  },
+
+
+  en:{
+    title:"🆕 New Baby Arrivals",
+    description:"Discover our latest added products",
+    button:"View new arrivals"
+  },
+
+
+  ar:{
+    title:"🆕 أحدث منتجات الأطفال",
+    description:"اكتشف أحدث المنتجات المضافة",
+    button:"عرض المنتجات الجديدة"
+  }
+
+};
+
+
+
+
 
 export default function NewArrivals(){
 
 
-  const newProducts = products.slice(-8).reverse();
+  const {language}=useLanguage();
+
+
+  const t = translations[language];
+
+
+
+  const newProducts = products
+    .filter(product=>product.newArrival)
+    .slice(0,8);
+
+
 
 
 
@@ -17,25 +59,34 @@ export default function NewArrivals(){
 
 
     <section
+
+      dir={language==="ar" ? "rtl" : "ltr"}
+
       className="
       py-16
       bg-white
       "
+
     >
 
 
+
       <div
+
         className="
         max-w-7xl
         mx-auto
         px-6
         "
+
       >
 
 
 
 
+
         <h2
+
           className="
           text-3xl
           md:text-4xl
@@ -44,31 +95,68 @@ export default function NewArrivals(){
           text-gray-800
           mb-4
           "
+
         >
-          🆕 Nouveautés bébé
+
+          {t.title}
+
         </h2>
 
 
 
 
 
+
         <p
+
           className="
           text-center
           text-gray-600
           mb-10
           "
+
         >
-          Découvrez nos derniers produits ajoutés
+
+          {t.description}
+
         </p>
 
 
 
 
 
-        <ProductsCarousel
-          products={newProducts}
-        />
+
+
+        {
+          newProducts.length > 0 ? (
+
+
+            <ProductsCarousel
+
+              products={newProducts}
+
+            />
+
+
+          ) : (
+
+
+            <p
+
+              className="
+              text-center
+              text-gray-500
+              "
+
+            >
+
+              Aucun nouveau produit disponible
+
+            </p>
+
+
+          )
+        }
 
 
 
@@ -77,11 +165,14 @@ export default function NewArrivals(){
 
 
         <div
+
           className="
           text-center
           mt-10
           "
+
         >
+
 
 
           <Link
@@ -105,7 +196,7 @@ export default function NewArrivals(){
 
           >
 
-            Voir les nouveautés
+            {t.button}
 
           </Link>
 

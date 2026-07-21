@@ -3,6 +3,60 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
+
+
+const translations = {
+
+fr:{
+title:"🛒 Finaliser la commande",
+empty:"Votre panier est vide 🛒",
+products:"Voir les produits",
+info:"Informations client",
+summary:"Résumé commande",
+name:"Nom complet",
+phone:"Téléphone",
+address:"Adresse",
+city:"Ville",
+button:"Continuer vers paiement",
+total:"Total",
+error:"Veuillez remplir tous les champs"
+},
+
+
+en:{
+title:"🛒 Complete your order",
+empty:"Your cart is empty 🛒",
+products:"View products",
+info:"Customer information",
+summary:"Order summary",
+name:"Full name",
+phone:"Phone",
+address:"Address",
+city:"City",
+button:"Continue to payment",
+total:"Total",
+error:"Please fill all fields"
+},
+
+
+ar:{
+title:"🛒 إتمام الطلب",
+empty:"السلة فارغة 🛒",
+products:"عرض المنتجات",
+info:"معلومات العميل",
+summary:"ملخص الطلب",
+name:"الاسم الكامل",
+phone:"الهاتف",
+address:"العنوان",
+city:"المدينة",
+button:"متابعة الدفع",
+total:"المجموع",
+error:"يرجى ملء جميع الحقول"
+}
+
+};
+
 
 
 export default function Checkout(){
@@ -14,8 +68,13 @@ totalPrice
 }=useCart();
 
 
+const router=useRouter();
 
-const router = useRouter();
+
+const {language}=useLanguage();
+
+
+const t=translations[language];
 
 
 
@@ -27,7 +86,6 @@ address:"",
 city:""
 
 });
-
 
 
 
@@ -48,12 +106,9 @@ setForm({
 
 
 
-
-
 function handleSubmit(e){
 
 e.preventDefault();
-
 
 
 if(
@@ -63,7 +118,7 @@ if(
 !form.city
 ){
 
-alert("Veuillez remplir tous les champs");
+alert(t.error);
 
 return;
 
@@ -104,23 +159,18 @@ px-6
 >
 
 
-<div
-className="
-text-center
-"
->
+<div className="text-center">
 
 
 <h1
 className="
 text-3xl
 font-bold
-text-gray-800
 mb-5
 "
 >
 
-Votre panier est vide 🛒
+{t.empty}
 
 </h1>
 
@@ -132,18 +182,16 @@ onClick={()=>router.push("/products")}
 
 className="
 bg-pink-500
-hover:bg-pink-600
 text-white
 px-8
 py-3
 rounded-xl
 font-bold
-transition
 "
 
 >
 
-Voir les produits
+{t.products}
 
 </button>
 
@@ -155,7 +203,6 @@ Voir les produits
 </div>
 
 );
-
 
 }
 
@@ -169,6 +216,9 @@ return (
 
 
 <section
+
+dir={language==="ar" ? "rtl":"ltr"}
+
 className="
 max-w-6xl
 mx-auto
@@ -176,6 +226,7 @@ px-4
 sm:px-6
 py-12
 "
+
 >
 
 
@@ -186,11 +237,10 @@ text-4xl
 font-bold
 text-center
 mb-10
-text-gray-800
 "
 >
 
-🛒 Finaliser la commande
+{t.title}
 
 </h1>
 
@@ -210,9 +260,6 @@ gap-10
 
 
 
-
-
-{/* FORMULAIRE */}
 
 
 
@@ -239,7 +286,7 @@ mb-6
 "
 >
 
-Informations client
+{t.info}
 
 </h2>
 
@@ -250,13 +297,9 @@ Informations client
 
 <input
 
-type="text"
-
 name="name"
 
-required
-
-placeholder="Nom complet"
+placeholder={t.name}
 
 value={form.name}
 
@@ -268,9 +311,6 @@ border
 rounded-xl
 p-3
 mb-4
-outline-none
-focus:ring-2
-focus:ring-pink-300
 "
 
 />
@@ -282,13 +322,9 @@ focus:ring-pink-300
 
 <input
 
-type="tel"
-
 name="phone"
 
-required
-
-placeholder="Téléphone"
+placeholder={t.phone}
 
 value={form.phone}
 
@@ -300,9 +336,6 @@ border
 rounded-xl
 p-3
 mb-4
-outline-none
-focus:ring-2
-focus:ring-pink-300
 "
 
 />
@@ -314,13 +347,9 @@ focus:ring-pink-300
 
 <input
 
-type="text"
-
 name="address"
 
-required
-
-placeholder="Adresse"
+placeholder={t.address}
 
 value={form.address}
 
@@ -332,9 +361,6 @@ border
 rounded-xl
 p-3
 mb-4
-outline-none
-focus:ring-2
-focus:ring-pink-300
 "
 
 />
@@ -346,13 +372,9 @@ focus:ring-pink-300
 
 <input
 
-type="text"
-
 name="city"
 
-required
-
-placeholder="Ville"
+placeholder={t.city}
 
 value={form.city}
 
@@ -364,9 +386,6 @@ border
 rounded-xl
 p-3
 mb-6
-outline-none
-focus:ring-2
-focus:ring-pink-300
 "
 
 />
@@ -386,15 +405,13 @@ text-white
 py-3
 rounded-xl
 font-bold
-transition
 "
 
 >
 
-Continuer vers paiement
+{t.button}
 
 </button>
-
 
 
 
@@ -406,9 +423,6 @@ Continuer vers paiement
 
 
 
-
-
-{/* RESUME */}
 
 
 
@@ -431,10 +445,9 @@ mb-6
 "
 >
 
-Résumé commande
+{t.summary}
 
 </h2>
-
 
 
 
@@ -458,32 +471,24 @@ py-3
 
 >
 
-
 <span>
 
-{item.name} × {item.quantity}
+{item.name?.[language]} × {item.quantity}
 
 </span>
 
 
-
-<span
-className="
-font-semibold
-"
->
+<span>
 
 {item.price * item.quantity} DT
 
 </span>
 
 
-
 </div>
 
 
 ))
-
 
 }
 
@@ -496,20 +501,19 @@ font-semibold
 <div
 className="
 mt-6
-text-xl
-font-bold
 flex
 justify-between
+text-xl
+font-bold
 "
 >
 
 
 <span>
 
-Total
+{t.total}
 
 </span>
-
 
 
 <span
@@ -523,6 +527,11 @@ text-pink-500
 </span>
 
 
+</div>
+
+
+
+
 
 </div>
 
@@ -532,15 +541,6 @@ text-pink-500
 
 
 </div>
-
-
-
-
-
-
-</div>
-
-
 
 
 
@@ -548,6 +548,5 @@ text-pink-500
 
 
 );
-
 
 }

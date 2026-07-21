@@ -1,7 +1,54 @@
 "use client";
 
-import { useCart } from "@/context/CartContext";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContext";
+
+
+
+const translations = {
+
+fr:{
+title:"🛒 Mon Panier",
+empty:"Votre panier est vide",
+price:"DT",
+delete:"Supprimer",
+total:"Total :",
+view:"Voir le panier",
+size:"Taille",
+color:"Couleur"
+},
+
+
+en:{
+title:"🛒 My Cart",
+empty:"Your cart is empty",
+price:"TND",
+delete:"Remove",
+total:"Total:",
+view:"View cart",
+size:"Size",
+color:"Color"
+},
+
+
+ar:{
+title:"🛒 سلتي",
+empty:"السلة فارغة",
+price:"د.ت",
+delete:"حذف",
+total:"المجموع:",
+view:"عرض السلة",
+size:"المقاس",
+color:"اللون"
+}
+
+};
+
+
+
 
 
 export default function CartDrawer(){
@@ -27,7 +74,14 @@ totalPrice
 
 
 
-const router = useRouter();
+const {language}=useLanguage();
+
+
+const t=translations[language];
+
+
+const router=useRouter();
+
 
 
 
@@ -61,12 +115,15 @@ z-40
 
 <div
 
+dir={language==="ar" ? "rtl":"ltr"}
+
 className="
 fixed
 right-0
 top-0
 h-full
-w-[380px]
+w-full
+sm:w-[400px]
 bg-white
 z-50
 p-6
@@ -78,25 +135,28 @@ overflow-y-auto
 
 
 
+
 <div
+
 className="
 flex
 justify-between
+items-center
 mb-6
 "
+
 >
 
 
-<h2
-className="
+<h2 className="
 text-xl
 font-bold
-"
->
+">
 
-🛒 Mon Panier
+{t.title}
 
 </h2>
+
 
 
 
@@ -105,15 +165,16 @@ font-bold
 onClick={closeCart}
 
 className="
-text-2xl
+text-3xl
+text-gray-500
 "
 
 >
 
 ×
 
-</button>
 
+</button>
 
 
 </div>
@@ -123,15 +184,18 @@ text-2xl
 
 
 
-
 {
 
-cart.length === 0 ?
+cart.length===0 ?
 
 
-<p className="text-gray-500">
+<p className="
+text-gray-500
+text-center
+mt-10
+">
 
-Votre panier est vide
+{t.empty}
 
 </p>
 
@@ -158,20 +222,37 @@ py-4
 
 
 
-<img
+<div className="
+relative
+w-20
+h-20
+flex-shrink-0
+">
+
+
+<Image
 
 src={item.image}
 
-alt={item.name}
+alt={
+typeof item.name==="object"
+?
+item.name[language]
+:
+item.name
+}
+
+fill
 
 className="
-w-20
-h-20
 object-cover
-rounded
+rounded-xl
 "
 
 />
+
+
+</div>
 
 
 
@@ -181,14 +262,24 @@ rounded
 <div className="flex-1">
 
 
-
-<h3
-className="
+<h3 className="
 font-bold
-"
->
+text-gray-800
+">
 
-{item.name}
+{
+
+typeof item.name==="object"
+
+?
+
+item.name[language]
+
+:
+
+item.name
+
+}
 
 </h3>
 
@@ -196,9 +287,12 @@ font-bold
 
 
 
-<p>
+<p className="
+text-pink-500
+font-bold
+">
 
-{item.price} TND
+{item.price} {t.price}
 
 </p>
 
@@ -207,16 +301,52 @@ font-bold
 
 
 
+{
+item.selectedSize &&
 
-<div
-className="
+<p className="
+text-sm
+text-gray-500
+">
+
+{t.size} :
+{item.selectedSize}
+
+</p>
+
+}
+
+
+
+
+
+{
+item.selectedColor &&
+
+<p className="
+text-sm
+text-gray-500
+">
+
+{t.color} :
+{item.selectedColor}
+
+</p>
+
+}
+
+
+
+
+
+
+
+<div className="
 flex
-gap-3
-mt-2
 items-center
-"
->
-
+gap-3
+mt-3
+">
 
 
 <button
@@ -224,9 +354,9 @@ items-center
 onClick={()=>decreaseQuantity(item.id)}
 
 className="
-w-7
-h-7
-rounded
+w-8
+h-8
+rounded-full
 bg-gray-100
 "
 
@@ -240,12 +370,13 @@ bg-gray-100
 
 
 
-<span className="font-bold">
+<span className="
+font-bold
+">
 
 {item.quantity}
 
 </span>
-
 
 
 
@@ -256,9 +387,9 @@ bg-gray-100
 onClick={()=>increaseQuantity(item.id)}
 
 className="
-w-7
-h-7
-rounded
+w-8
+h-8
+rounded-full
 bg-pink-500
 text-white
 "
@@ -271,8 +402,21 @@ text-white
 
 
 
-
 </div>
+
+
+
+
+
+
+<p className="
+font-semibold
+mt-2
+">
+
+{item.price * item.quantity} {t.price}
+
+</p>
 
 
 
@@ -292,17 +436,13 @@ mt-2
 
 >
 
-Supprimer
+{t.delete}
 
 </button>
 
 
 
-
 </div>
-
-
-
 
 
 
@@ -321,24 +461,27 @@ Supprimer
 
 
 
-<div
-className="
+<div className="
 mt-6
-font-bold
 text-lg
-"
->
+font-bold
+">
 
-Total :
+{t.total}
 
-<span className="text-pink-500">
 
- {totalPrice()} TND
+<span className="
+text-pink-500
+ml-2
+">
+
+{totalPrice()} {t.price}
 
 </span>
 
 
 </div>
+
 
 
 
@@ -359,18 +502,18 @@ router.push("/cart");
 className="
 w-full
 bg-black
-hover:bg-gray-800
 text-white
 py-3
 rounded-xl
-mt-4
+mt-5
 font-bold
+hover:bg-gray-800
 transition
 "
 
 >
 
-Voir le panier
+{t.view}
 
 </button>
 
@@ -378,9 +521,8 @@ Voir le panier
 
 
 
+
 </div>
-
-
 
 
 

@@ -1,14 +1,138 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  MessageCircle,
+  ShieldCheck,
+  Truck,
+  CreditCard
+} from "lucide-react";
+
+
+import { useLanguage } from "@/context/LanguageContext";
+
+
+
+const translations = {
+
+fr:{
+description:
+"Votre boutique en ligne spécialisée dans les produits bébé. Des articles de qualité pour le confort de votre bébé.",
+
+navigation:"Navigation",
+home:"Accueil",
+products:"Produits",
+categories:"Catégories",
+cart:"Panier",
+
+account:"Mon compte",
+login:"Connexion",
+register:"Créer un compte",
+order:"Commande",
+
+contact:"Contact",
+tunisia:"Tunisie",
+hours:"Lun - Sam : 08:00 - 18:00",
+
+follow:"Suivez-nous",
+
+security:"Sécurité",
+payment:"Paiement sécurisé",
+delivery:"Livraison rapide",
+verified:"Produits vérifiés",
+
+rights:"Tous droits réservés."
+},
+
+
+en:{
+description:
+"Your online store specialized in baby products. Quality items for your baby's comfort.",
+
+navigation:"Navigation",
+home:"Home",
+products:"Products",
+categories:"Categories",
+cart:"Cart",
+
+account:"My account",
+login:"Login",
+register:"Create account",
+order:"Order",
+
+contact:"Contact",
+tunisia:"Tunisia",
+hours:"Mon - Sat : 08:00 - 18:00",
+
+follow:"Follow us",
+
+security:"Security",
+payment:"Secure payment",
+delivery:"Fast delivery",
+verified:"Verified products",
+
+rights:"All rights reserved."
+},
+
+
+
+ar:{
+description:
+"متجرك الإلكتروني المتخصص في منتجات الأطفال. منتجات ذات جودة لراحة طفلك.",
+
+navigation:"التنقل",
+home:"الرئيسية",
+products:"المنتجات",
+categories:"الأصناف",
+cart:"السلة",
+
+account:"حسابي",
+login:"تسجيل الدخول",
+register:"إنشاء حساب",
+order:"الطلب",
+
+contact:"اتصل بنا",
+tunisia:"تونس",
+hours:"الإثنين - السبت : 08:00 - 18:00",
+
+follow:"تابعنا",
+
+security:"الأمان",
+payment:"دفع آمن",
+delivery:"توصيل سريع",
+verified:"منتجات موثوقة",
+
+rights:"جميع الحقوق محفوظة."
+}
+
+};
+
+
+
+
 
 
 export default function Footer(){
 
 
+const {language}=useLanguage();
+
+const t=translations[language];
+
+
+
 return (
 
-
 <footer
+
+dir={language==="ar" ? "rtl" : "ltr"}
+
 className="
 mt-16
 rounded-t-3xl
@@ -18,27 +142,29 @@ via-white
 to-blue-50
 text-gray-700
 "
+
 >
 
 
+
 <div
+
 className="
 max-w-7xl
 mx-auto
 px-6
 py-12
 grid
-md:grid-cols-5
+sm:grid-cols-2
+lg:grid-cols-5
 gap-10
 "
+
 >
 
 
 
-
-
 {/* BRAND */}
-
 
 <div>
 
@@ -49,7 +175,7 @@ className="
 flex
 items-center
 gap-3
-mb-4
+mb-5
 "
 >
 
@@ -58,7 +184,7 @@ mb-4
 
 src="/images/logo.jpg"
 
-alt="Baby Shop Logo"
+alt="Baby Shop"
 
 width={55}
 
@@ -66,47 +192,34 @@ height={55}
 
 className="
 rounded-full
-object-cover
 shadow-md
 "
 
 />
 
 
+<div>
 
-<div className="flex flex-col">
-
-
-<span
-className="
+<h2 className="
 text-2xl
 font-extrabold
-tracking-wide
 bg-gradient-to-r
 from-pink-500
 to-blue-500
 bg-clip-text
 text-transparent
-"
->
+">
 
 BABY-SHOP
 
-</span>
+</h2>
 
 
-
-<span
-className="
-text-xs
-text-gray-500
-"
->
+<p className="text-xs text-gray-500">
 
 Boutique bébé 🍼
 
-</span>
-
+</p>
 
 
 </div>
@@ -116,27 +229,14 @@ Boutique bébé 🍼
 
 
 
+<p className="leading-7 text-gray-600">
 
-
-
-<p
-className="
-text-gray-600
-leading-7
-"
->
-
-Votre boutique en ligne spécialisée
-dans les produits bébé.
-Des articles de qualité pour
-le confort de votre bébé.
+{t.description}
 
 </p>
 
 
-
 </div>
-
 
 
 
@@ -146,111 +246,49 @@ le confort de votre bébé.
 
 {/* NAVIGATION */}
 
-
-
 <div>
 
 
-<h4
-className="
-text-lg
-font-bold
-text-pink-500
-mb-4
-"
->
+<h3 className="text-lg font-bold text-pink-500 mb-5">
 
-Navigation
+{t.navigation}
 
-</h4>
+</h3>
 
 
 
-
-<ul
-className="
-space-y-3
-"
->
+<ul className="space-y-3">
 
 
 <li>
-
-<Link
-href="/"
-className="
-hover:text-pink-500
-transition
-"
->
-
-Accueil
-
+<Link href="/" className="hover:text-pink-500 transition">
+{t.home}
 </Link>
-
 </li>
-
 
 
 <li>
-
-<Link
-href="/products"
-className="
-hover:text-pink-500
-transition
-"
->
-
-Produits
-
+<Link href="/products" className="hover:text-pink-500 transition">
+{t.products}
 </Link>
-
 </li>
-
-
 
 
 <li>
-
-<Link
-href="/categories"
-className="
-hover:text-pink-500
-transition
-"
->
-
-Catégories
-
+<Link href="/categories" className="hover:text-pink-500 transition">
+{t.categories}
 </Link>
-
 </li>
-
-
-
 
 
 <li>
-
-<Link
-href="/cart"
-className="
-hover:text-pink-500
-transition
-"
->
-
-Panier
-
+<Link href="/cart" className="hover:text-pink-500 transition">
+{t.cart}
 </Link>
-
 </li>
-
 
 
 </ul>
-
 
 
 </div>
@@ -262,98 +300,44 @@ Panier
 
 
 
-
-
-{/* COMPTE */}
-
-
+{/* ACCOUNT */}
 
 <div>
 
 
-<h4
-className="
-text-lg
-font-bold
-text-blue-500
-mb-4
-"
->
+<h3 className="text-lg font-bold text-blue-500 mb-5">
 
-Mon compte
+{t.account}
 
-</h4>
+</h3>
 
 
 
-<ul
-className="
-space-y-3
-"
->
+<ul className="space-y-3">
 
 
 <li>
-
-<Link
-href="/login"
-className="
-hover:text-blue-500
-transition
-"
->
-
-Connexion
-
+<Link href="/login" className="hover:text-blue-500 transition">
+{t.login}
 </Link>
-
-
 </li>
-
-
 
 
 <li>
-
-<Link
-href="/register"
-className="
-hover:text-blue-500
-transition
-"
->
-
-Créer un compte
-
+<Link href="/register" className="hover:text-blue-500 transition">
+{t.register}
 </Link>
-
-
 </li>
-
-
 
 
 <li>
-
-<Link
-href="/checkout"
-className="
-hover:text-blue-500
-transition
-"
->
-
-Commande
-
+<Link href="/checkout" className="hover:text-blue-500 transition">
+{t.order}
 </Link>
-
-
 </li>
-
 
 
 </ul>
-
 
 
 </div>
@@ -368,58 +352,57 @@ Commande
 
 {/* CONTACT */}
 
-
-
 <div>
 
 
-<h4
-className="
-text-lg
-font-bold
-text-pink-500
-mb-4
-"
->
+<h3 className="text-lg font-bold text-pink-500 mb-5">
 
-Contact
+{t.contact}
 
-</h4>
+</h3>
 
 
 
-
-<ul
-className="
-space-y-3
-text-gray-600
-"
->
+<div className="space-y-4 text-sm">
 
 
-<li>
-📍 Tunisie
-</li>
+<p className="flex items-center gap-3">
+
+<MapPin size={18}/>
+
+{t.tunisia}
+
+</p>
 
 
-<li>
-📞 +216 XX XXX XXX
-</li>
+<p className="flex items-center gap-3">
+
+<Phone size={18}/>
+
++216 XX XXX XXX
+
+</p>
 
 
-<li>
-✉ contact@baby-shop.com
-</li>
+<p className="flex items-center gap-3">
+
+<Mail size={18}/>
+
+contact@baby-shop.com
+
+</p>
 
 
-<li>
-🕘 Lun - Sam : 08:00 - 18:00
-</li>
+<p className="flex items-center gap-3">
+
+<Clock size={18}/>
+
+{t.hours}
+
+</p>
 
 
-
-</ul>
-
+</div>
 
 
 </div>
@@ -431,44 +414,25 @@ text-gray-600
 
 
 
-{/* SOCIAL */}
+
+{/* SOCIAL + SECURITY */}
 
 <div>
 
 
-<h4
-className="
-text-lg
-font-bold
-text-blue-500
-mb-4
-"
->
+<h3 className="text-lg font-bold text-blue-500 mb-5">
 
-Suivez-nous
+{t.follow}
 
-</h4>
+</h3>
 
 
 
+<div className="flex gap-3 mb-7">
 
 
-<div
-className="
-flex
-gap-3
-mb-6
-"
->
-
-
-
-{/* Facebook */}
 
 <a
-href="https://facebook.com"
-target="_blank"
-rel="noopener noreferrer"
 className="
 w-10
 h-10
@@ -478,28 +442,21 @@ text-white
 flex
 items-center
 justify-center
-font-bold
 hover:scale-110
 transition
 "
 >
 
+<span className="font-bold text-lg">
 f
+</span>
 
 </a>
 
 
 
 
-
-
-{/* Instagram */}
-
-
 <a
-href="https://instagram.com"
-target="_blank"
-rel="noopener noreferrer"
 className="
 w-10
 h-10
@@ -509,30 +466,21 @@ text-white
 flex
 items-center
 justify-center
-font-bold
 hover:scale-110
 transition
 "
 >
 
+<span className="font-bold text-lg">
 ◎
+</span>
 
 </a>
 
 
 
 
-
-
-
-
-{/* WhatsApp */}
-
-
 <a
-href="https://wa.me/216XXXXXXXX"
-target="_blank"
-rel="noopener noreferrer"
 className="
 w-10
 h-10
@@ -542,81 +490,88 @@ text-white
 flex
 items-center
 justify-center
-font-bold
 hover:scale-110
 transition
 "
 >
 
-W
+<MessageCircle size={20}/>
 
 </a>
 
 
-
-
-
 </div>
 
 
 
 
 
-<h4
-className="
-text-lg
-font-bold
-text-blue-500
-mb-3
-"
->
 
-Sécurité
 
-</h4>
+<h3 className="text-lg font-bold text-blue-500 mb-4">
+
+{t.security}
+
+</h3>
 
 
 
-<p
-className="
-text-gray-600
-text-sm
-leading-7
-"
->
+<div className="space-y-3 text-sm">
 
-🔒 Paiement sécurisé
 
-<br/>
+<p className="flex items-center gap-3">
 
-🚚 Livraison rapide
+<CreditCard size={18}/>
 
-<br/>
-
-✅ Produits vérifiés
+{t.payment}
 
 </p>
 
 
+<p className="flex items-center gap-3">
+
+<Truck size={18}/>
+
+{t.delivery}
+
+</p>
+
+
+<p className="flex items-center gap-3">
+
+<ShieldCheck size={18}/>
+
+{t.verified}
+
+</p>
 
 
 </div>
+
+
+
 </div>
 
 
-<div
-className="
+
+</div>
+
+
+
+
+
+
+<div className="
 border-t
 border-gray-200
 text-center
 py-5
 text-sm
 text-gray-500
-"
->
+">
 
 © {new Date().getFullYear()} BABY-SHOP.
-Tous droits réservés.
+{t.rights}
 
 </div>
 
@@ -626,6 +581,5 @@ Tous droits réservés.
 
 
 );
-
 
 }

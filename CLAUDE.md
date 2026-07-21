@@ -1,1 +1,1 @@
-@AGENTS.md
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/babyshop

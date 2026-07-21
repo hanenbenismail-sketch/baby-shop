@@ -9,59 +9,127 @@ import "swiper/css/navigation";
 import ProductCard from "./ProductCard";
 
 
-export default function ProductsCarousel({ products }) {
 
-  return (
-
-    <Swiper
-
-      modules={[Navigation, Autoplay]}
-
-      navigation
-
-      loop={true}
-
-      autoplay={{
-        delay: 3000,
-        disableOnInteraction: false,
-      }}
-
-      spaceBetween={24}
+export default function ProductsCarousel({ products = [] }) {
 
 
-      breakpoints={{
-        0: {
-          slidesPerView: 1,
-        },
 
-        640: {
-          slidesPerView: 2,
-        },
+if(products.length === 0){
 
-        768: {
-          slidesPerView: 3,
-        },
+return (
 
-        1024: {
-          slidesPerView: 4,
-        },
-      }}
+<p className="
+text-center
+text-gray-500
+py-10
+">
 
-    >
+Aucun produit disponible
 
+</p>
 
-      {products.map((product)=>(
+);
 
-        <SwiperSlide key={product.id}>
-
-          <ProductCard product={product}/>
-
-        </SwiperSlide>
-
-      ))}
+}
 
 
-    </Swiper>
 
-  );
+
+
+return (
+
+
+<Swiper
+
+
+modules={[Navigation, Autoplay]}
+
+
+navigation
+
+
+loop={products.length > 4}
+
+
+
+autoplay={{
+
+delay:3000,
+
+disableOnInteraction:false
+
+}}
+
+
+
+spaceBetween={24}
+
+
+
+breakpoints={{
+
+0:{
+slidesPerView:1
+},
+
+
+640:{
+slidesPerView:2
+},
+
+
+768:{
+slidesPerView:3
+},
+
+
+1024:{
+slidesPerView:4
+}
+
+
+}}
+
+
+>
+
+
+
+{
+
+products.map((product)=>(
+
+
+<SwiperSlide
+
+key={product.id}
+
+className="h-auto"
+
+>
+
+
+<ProductCard
+
+product={product}
+
+/>
+
+
+</SwiperSlide>
+
+
+))
+
+
+}
+
+
+
+</Swiper>
+
+
+);
+
+
 }

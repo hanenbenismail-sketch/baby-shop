@@ -5,11 +5,85 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { useLanguage } from "@/context/LanguageContext";
+
+
+
+const translations = {
+
+fr:{
+title:"Créer un compte 🍼",
+subtitle:"Rejoignez Baby-Shop",
+name:"Nom complet",
+email:"Email",
+phone:"Téléphone",
+address:"Adresse complète",
+password:"Mot de passe",
+confirm:"Confirmer mot de passe",
+button:"Créer mon compte",
+have:"Vous avez déjà un compte ?",
+login:"Connexion",
+error:"Veuillez remplir tous les champs",
+match:"Les mots de passe ne correspondent pas",
+success:"Compte créé avec succès 🎉"
+},
+
+
+en:{
+title:"Create account 🍼",
+subtitle:"Join Baby-Shop",
+name:"Full name",
+email:"Email",
+phone:"Phone",
+address:"Full address",
+password:"Password",
+confirm:"Confirm password",
+button:"Create account",
+have:"Already have an account?",
+login:"Login",
+error:"Please fill all fields",
+match:"Passwords do not match",
+success:"Account created successfully 🎉"
+},
+
+
+ar:{
+title:"إنشاء حساب 🍼",
+subtitle:"انضم إلى Baby-Shop",
+name:"الاسم الكامل",
+email:"البريد الإلكتروني",
+phone:"الهاتف",
+address:"العنوان",
+password:"كلمة المرور",
+confirm:"تأكيد كلمة المرور",
+button:"إنشاء الحساب",
+have:"لديك حساب بالفعل؟",
+login:"تسجيل الدخول",
+error:"يرجى ملء جميع الحقول",
+match:"كلمتا المرور غير متطابقتين",
+success:"تم إنشاء الحساب بنجاح 🎉"
+}
+
+};
+
+
+
+
+
+
+
 
 export default function RegisterPage(){
 
 
-const router = useRouter();
+
+const router=useRouter();
+
+
+const {language}=useLanguage();
+
+
+const t=translations[language];
 
 
 
@@ -17,8 +91,8 @@ const [form,setForm]=useState({
 
 name:"",
 email:"",
-address:"",
 phone:"",
+address:"",
 password:"",
 password_confirmation:""
 
@@ -34,8 +108,7 @@ const [success,setSuccess]=useState("");
 
 
 
-const handleChange=(e)=>{
-
+function handleChange(e){
 
 setForm({
 
@@ -45,15 +118,13 @@ setForm({
 
 });
 
-
-};
-
+}
 
 
 
 
 
-const handleSubmit=(e)=>{
+function handleSubmit(e){
 
 
 e.preventDefault();
@@ -70,17 +141,18 @@ if(
 !form.password_confirmation
 ){
 
-setError("Veuillez remplir tous les champs");
+setError(t.error);
 
 return;
 
 }
+
 
 
 
 if(form.password !== form.password_confirmation){
 
-setError("Les mots de passe ne correspondent pas");
+setError(t.match);
 
 return;
 
@@ -88,7 +160,8 @@ return;
 
 
 
-setSuccess("Compte créé avec succès 🎉");
+
+setSuccess(t.success);
 
 
 
@@ -100,7 +173,7 @@ router.push("/login");
 
 
 
-};
+}
 
 
 
@@ -112,6 +185,9 @@ return (
 
 
 <section
+
+dir={language==="ar"?"rtl":"ltr"}
+
 className="
 min-h-screen
 flex
@@ -124,13 +200,13 @@ from-pink-50
 via-white
 to-blue-50
 "
+
 >
 
 
 
-
-
 <div
+
 className="
 w-full
 max-w-md
@@ -141,22 +217,22 @@ p-8
 border
 border-gray-100
 "
+
 >
 
 
 
 
-
-{/* LOGO */}
-
-
 <div
+
 className="
 flex
 justify-center
 mb-6
 "
+
 >
+
 
 <Image
 
@@ -175,6 +251,7 @@ shadow-md
 
 />
 
+
 </div>
 
 
@@ -184,6 +261,7 @@ shadow-md
 
 
 <h1
+
 className="
 text-3xl
 font-extrabold
@@ -195,25 +273,27 @@ to-blue-500
 bg-clip-text
 text-transparent
 "
+
 >
 
-Créer un compte 🍼
+{t.title}
 
 </h1>
 
 
 
 
-
 <p
+
 className="
 text-center
 text-gray-500
 mb-8
 "
+
 >
 
-Rejoignez Baby-Shop
+{t.subtitle}
 
 </p>
 
@@ -222,19 +302,16 @@ Rejoignez Baby-Shop
 
 
 
-{
-error &&
 
-<p
-className="
+{error &&
+
+<p className="
 bg-red-50
 text-red-500
 p-3
 rounded-xl
-mb-4
 text-center
-"
->
+">
 
 {error}
 
@@ -247,20 +324,15 @@ text-center
 
 
 
+{success &&
 
-{
-success &&
-
-<p
-className="
+<p className="
 bg-green-50
 text-green-600
 p-3
 rounded-xl
-mb-4
 text-center
-"
->
+">
 
 {success}
 
@@ -274,26 +346,44 @@ text-center
 
 
 
-
-
 <form
+
 onSubmit={handleSubmit}
+
 className="
 space-y-4
 "
+
 >
 
 
 
 
 
+{
+
+[
+["name",t.name],
+["email",t.email],
+["phone",t.phone],
+["address",t.address],
+["password",t.password],
+["password_confirmation",t.confirm]
+
+].map(([key,placeholder])=>(
+
+
 <input
 
-name="name"
+key={key}
 
-placeholder="Nom complet"
+name={key}
 
-value={form.name}
+type={key.includes("password")?"password":"text"}
+
+placeholder={placeholder}
+
+value={form[key]}
 
 onChange={handleChange}
 
@@ -310,154 +400,10 @@ focus:ring-pink-300
 />
 
 
+))
 
 
-
-
-<input
-
-name="email"
-
-type="email"
-
-placeholder="Email"
-
-value={form.email}
-
-onChange={handleChange}
-
-className="
-w-full
-border
-rounded-xl
-p-3
-outline-none
-focus:ring-2
-focus:ring-pink-300
-"
-
-/>
-
-
-
-
-
-
-
-<input
-
-name="phone"
-
-placeholder="Téléphone"
-
-value={form.phone}
-
-onChange={handleChange}
-
-className="
-w-full
-border
-rounded-xl
-p-3
-outline-none
-focus:ring-2
-focus:ring-pink-300
-"
-
-/>
-
-
-
-
-
-
-
-
-<input
-
-name="address"
-
-placeholder="Adresse complète"
-
-value={form.address}
-
-onChange={handleChange}
-
-className="
-w-full
-border
-rounded-xl
-p-3
-outline-none
-focus:ring-2
-focus:ring-pink-300
-"
-
-/>
-
-
-
-
-
-
-
-
-<input
-
-name="password"
-
-type="password"
-
-placeholder="Mot de passe"
-
-value={form.password}
-
-onChange={handleChange}
-
-className="
-w-full
-border
-rounded-xl
-p-3
-outline-none
-focus:ring-2
-focus:ring-pink-300
-"
-
-/>
-
-
-
-
-
-
-
-
-<input
-
-name="password_confirmation"
-
-type="password"
-
-placeholder="Confirmer mot de passe"
-
-value={form.password_confirmation}
-
-onChange={handleChange}
-
-className="
-w-full
-border
-rounded-xl
-p-3
-outline-none
-focus:ring-2
-focus:ring-pink-300
-"
-
-/>
-
-
+}
 
 
 
@@ -481,7 +427,7 @@ shadow-md
 
 >
 
-Créer mon compte
+{t.button}
 
 </button>
 
@@ -497,16 +443,18 @@ Créer mon compte
 
 
 
-
 <p
+
 className="
 text-center
 mt-6
 text-gray-600
 "
+
 >
 
-Vous avez déjà un compte ?
+{t.have}
+
 
 <Link
 
@@ -516,14 +464,14 @@ className="
 text-pink-500
 font-bold
 ml-2
-hover:underline
 "
 
 >
 
-Connexion
+{t.login}
 
 </Link>
+
 
 
 </p>
@@ -537,10 +485,8 @@ Connexion
 
 
 
-
-
-
 </section>
+
 
 
 );

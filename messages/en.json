@@ -1,0 +1,16 @@
+{
+  "navbar": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "cart": "Cart",
+    "login": "Login"
+    
+  },
+
+  "hero": {
+    "title": "Everything for your baby",
+    "description": "Baby clothes, toys and accessories",
+    "button": "Discover"
+  }
+}

@@ -3,201 +3,187 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Heart, Star } from "lucide-react";
+
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 
+const translations = {
 
-export default function ProductCard({ product }) {
+fr:{
+add:"🛒 Ajouter au panier",
+detail:"Voir détail"
+},
 
+en:{
+add:"🛒 Add to cart",
+detail:"View details"
+},
 
-  const { addToCart } = useCart();
+ar:{
+add:"🛒 أضف إلى السلة",
+detail:"عرض التفاصيل"
+}
 
+};
 
 
-  return (
 
+export default function ProductCard({product}){
 
-    <div
-      className="
-      bg-white
-      rounded-3xl
-      overflow-hidden
-      shadow-sm
-      border
-      border-gray-100
-      hover:shadow-xl
-      transition
-      h-full
-      flex
-      flex-col
-      "
-    >
 
+const {addToCart}=useCart();
 
-      {/* IMAGE */}
 
-      <div
-        className="
-        relative
-        w-full
-        h-64
-        "
-      >
+const {
+addToWishlist,
+removeFromWishlist,
+isInWishlist
+}=useWishlist();
 
-        <Image
 
-          src={product.image}
 
-          alt={product.name}
+const {language}=useLanguage();
 
-          fill
 
-          className="
-          object-cover
-          hover:scale-105
-          transition
-          duration-300
-          "
+const t=translations[language];
 
-        />
 
-      </div>
+const liked=isInWishlist(product.id);
 
 
 
 
 
-      {/* CONTENT */}
+return (
 
 
-      <div
-        className="
-        p-5
-        flex
-        flex-col
-        flex-1
-        "
-      >
+<div
 
+dir={language==="ar" ? "rtl":"ltr"}
 
-        <h3
-          className="
-          text-lg
-          font-bold
-          text-gray-800
-          mb-2
-          line-clamp-2
-          "
-        >
+className="
+bg-white
+rounded-3xl
+overflow-hidden
+shadow-sm
+border
+border-gray-100
+hover:shadow-xl
+transition
+duration-300
+h-full
+flex
+flex-col
+"
 
-          {product.name}
+>
 
-        </h3>
 
+{/* IMAGE */}
 
+<div
 
+className="
+relative
+w-full
+h-64
+overflow-hidden
+"
 
+>
 
-        <p
-          className="
-          text-sm
-          text-gray-500
-          mb-3
-          line-clamp-2
-          "
-        >
 
-          {product.description}
+<Image
 
-        </p>
+src={product.image}
 
+alt={product.name[language]}
 
+fill
 
+className="
+object-cover
+hover:scale-105
+transition
+duration-500
+"
 
+/>
 
 
 
-        <div
-          className="
-          flex
-          justify-between
-          items-center
-          mb-4
-          "
-        >
 
 
-          <span
-            className="
-            text-xl
-            font-bold
-            text-pink-500
-            "
-          >
+{/* WISHLIST */}
 
-            {product.price} DT
+<button
 
-          </span>
+onClick={()=>{
 
+if(liked){
 
+removeFromWishlist(product.id);
 
+}
 
-          <span
-            className="
-            text-yellow-500
-            "
-          >
+else{
 
-            {"⭐".repeat(product.rating || 0)}
+addToWishlist(product);
 
-          </span>
+}
 
+}}
 
+className="
+absolute
+top-4
+right-4
+bg-white
+w-10
+h-10
+rounded-full
+flex
+items-center
+justify-center
+shadow-md
+hover:scale-110
+transition
+"
 
-        </div>
+>
 
 
+<Heart
 
+size={22}
 
+className={
 
+liked
 
+?
 
+"fill-pink-500 text-pink-500"
 
+:
 
-        {/* ACTIONS */}
+"text-gray-400"
 
-        <div
-          className="
-          flex
-          flex-col
-          gap-3
-          mt-auto
-          "
-        >
+}
 
+/>
 
 
-          <button
+</button>
 
-            onClick={() => addToCart(product)}
 
-            className="
-            w-full
-            bg-pink-500
-            hover:bg-pink-600
-            text-white
-            py-2
-            px-4
-            rounded-xl
-            transition
-            font-semibold
-            "
 
-          >
+</div>
 
-            🛒 Ajouter
 
-          </button>
 
 
 
@@ -205,50 +191,238 @@ export default function ProductCard({ product }) {
 
 
 
+{/* CONTENT */}
 
-          <Link
 
-            href={`/product/${product.id}`}
+<div
 
-            className="
-            w-full
-            bg-blue-500
-            hover:bg-blue-600
-            text-white
-            py-2
-            px-4
-            rounded-xl
-            text-center
-            transition
-            font-semibold
-            "
+className="
+p-5
+flex
+flex-col
+flex-1
+"
 
-          >
+>
 
-            Voir détail
 
-          </Link>
 
+<h3
 
+className="
+text-lg
+font-bold
+text-gray-800
+mb-2
+line-clamp-2
+"
 
+>
 
+{product.name[language]}
 
-        </div>
+</h3>
 
 
 
 
 
-      </div>
 
+<p
 
+className="
+text-sm
+text-gray-500
+mb-4
+line-clamp-2
+"
 
+>
 
+{product.description[language]}
 
-    </div>
+</p>
 
 
-  );
+
+
+
+
+
+
+
+{/* PRICE + RATING */}
+
+
+<div
+
+className="
+flex
+justify-between
+items-center
+mb-5
+"
+
+>
+
+
+<span
+
+className="
+text-xl
+font-bold
+text-pink-500
+"
+
+>
+
+{product.price} DT
+
+</span>
+
+
+
+
+
+
+
+<div className="flex gap-1">
+
+
+{
+
+[1,2,3,4,5].map((star)=>(
+
+
+<Star
+
+key={star}
+
+size={17}
+
+className={
+
+star <= (product.rating || 0)
+
+?
+
+"fill-yellow-400 text-yellow-400"
+
+:
+
+"text-gray-300"
+
+}
+
+/>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* BUTTONS */}
+
+
+
+<div
+
+className="
+flex
+flex-col
+gap-3
+mt-auto
+"
+
+>
+
+
+
+<button
+
+onClick={()=>addToCart(product)}
+
+className="
+w-full
+bg-pink-500
+hover:bg-pink-600
+text-white
+py-2
+rounded-xl
+font-semibold
+transition
+"
+
+>
+
+{t.add}
+
+</button>
+
+
+
+
+
+
+
+<Link
+
+href={`/product/${product.id}`}
+
+className="
+w-full
+bg-blue-500
+hover:bg-blue-600
+text-white
+py-2
+rounded-xl
+text-center
+font-semibold
+transition
+"
+
+>
+
+{t.detail}
+
+</Link>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+);
 
 
 }

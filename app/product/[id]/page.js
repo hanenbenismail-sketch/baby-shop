@@ -4,61 +4,108 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
+import { Heart, Star } from "lucide-react";
+
 import products from "@/app/data/products";
+
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 
-export default function ProductDetails() {
+const translations = {
 
+fr:{
+notFound:"Produit introuvable",
+size:"Taille",
+color:"Couleur",
+stock:"Stock",
+add:"🛒 Ajouter au panier",
+reviews:"avis"
+},
 
-  const { id } = useParams();
+en:{
+notFound:"Product not found",
+size:"Size",
+color:"Color",
+stock:"Stock",
+add:"🛒 Add to cart",
+reviews:"reviews"
+},
 
-  const { addToCart } = useCart();
+ar:{
+notFound:"المنتج غير موجود",
+size:"المقاس",
+color:"اللون",
+stock:"المخزون",
+add:"🛒 أضف إلى السلة",
+reviews:"تقييم"
+}
 
-
-
-  const product = products.find(
-    (item) => item.id.toString() === id
-  );
-
-
-
-  if (!product) {
-
-    return (
-
-      <div
-        className="
-        text-center
-        py-20
-        text-2xl
-        text-red-500
-        "
-      >
-        Produit introuvable
-      </div>
-
-    );
-
-  }
-
-
-
-  const images = product.images || [
-    product.image
-  ];
+};
 
 
 
-  return (
 
-    <ProductView
-      product={product}
-      images={images}
-      addToCart={addToCart}
-    />
 
-  );
+export default function ProductDetails(){
+
+
+const {id}=useParams();
+
+const {addToCart}=useCart();
+
+const {language}=useLanguage();
+
+const t=translations[language];
+
+
+
+const product=products.find(
+(item)=>item.id.toString()===id
+);
+
+
+
+
+if(!product){
+
+return (
+
+<div className="
+text-center
+py-20
+text-2xl
+text-red-500
+">
+
+{t.notFound}
+
+</div>
+
+);
+
+}
+
+
+
+
+return (
+
+<ProductView
+
+product={product}
+
+addToCart={addToCart}
+
+t={t}
+
+language={language}
+
+/>
+
+);
+
 
 }
 
@@ -68,73 +115,104 @@ export default function ProductDetails() {
 
 
 
-function ProductView({product, images, addToCart}) {
 
 
-  const [selectedImage, setSelectedImage] = useState(product.image);
-
-  const [size, setSize] = useState("");
-
-  const [color, setColor] = useState("");
-
-
-
-  const productToCart = {
-
-    ...product,
-
-    selectedSize:size,
-
-    selectedColor:color
-
-  };
+function ProductView({
+product,
+addToCart,
+t,
+language
+}){
 
 
+const {addToWishlist,isInWishlist}=useWishlist();
 
 
-  return (
+const [selectedImage,setSelectedImage]=useState(
+product.image
+);
+
+
+const [size,setSize]=useState("");
+
+const [color,setColor]=useState("");
+
+
+
+const images=product.images || [
+product.image
+];
+
+
+
+const liked=isInWishlist(product.id);
+
+
+
+const productToCart={
+
+...product,
+
+selectedSize:size,
+
+selectedColor:color
+
+};
+
+
+
+
+
+
+
+return (
+
 
 <section
+
+dir={language==="ar"?"rtl":"ltr"}
+
 className="
 max-w-7xl
 mx-auto
-px-4
-sm:px-6
+px-6
 py-12
 "
+
 >
 
 
-<div
-className="
+<div className="
 grid
 md:grid-cols-2
 gap-10
-"
->
+">
 
 
-{/* GALLERY */}
+
+
+
+{/* IMAGE */}
+
 
 <div>
 
 
-<div
-className="
+<div className="
 relative
 h-[350px]
 sm:h-[450px]
 rounded-3xl
 overflow-hidden
 shadow-lg
-"
->
+">
+
 
 <Image
 
 src={selectedImage}
 
-alt={product.name}
+alt={product.name[language]}
 
 fill
 
@@ -144,23 +222,75 @@ object-cover
 
 />
 
+
+
+
+
+<button
+
+onClick={()=>addToWishlist(product)}
+
+className="
+absolute
+top-5
+right-5
+bg-white
+w-11
+h-11
+rounded-full
+flex
+items-center
+justify-center
+shadow
+"
+
+>
+
+
+<Heart
+
+size={24}
+
+className={
+
+liked
+
+?
+
+"fill-pink-500 text-pink-500"
+
+:
+
+"text-gray-400"
+
+}
+
+/>
+
+
+</button>
+
+
+
 </div>
 
 
 
 
 
-<div
-className="
+
+<div className="
 flex
 gap-3
 mt-5
 flex-wrap
-"
->
+">
 
 
-{images.map((img,index)=>(
+{
+
+images.map((img,index)=>(
+
 
 <button
 
@@ -177,18 +307,21 @@ overflow-hidden
 border-2
 ${
 selectedImage===img
-?"border-pink-500"
-:"border-gray-200"
+?
+"border-pink-500"
+:
+"border-gray-200"
 }
 `}
 
 >
 
+
 <Image
 
 src={img}
 
-alt={product.name}
+alt={product.name[language]}
 
 fill
 
@@ -196,12 +329,17 @@ className="object-cover"
 
 />
 
+
 </button>
 
-))}
+
+))
+
+}
 
 
 </div>
+
 
 
 </div>
@@ -216,56 +354,67 @@ className="object-cover"
 
 {/* INFO */}
 
-<div
-className="
+
+<div className="
 flex
 flex-col
 justify-center
-"
->
+">
 
 
-<h1
-className="
-text-3xl
-sm:text-4xl
+
+<h1 className="
+text-4xl
 font-bold
 text-gray-800
 mb-4
-"
->
-{product.name}
+">
+
+{product.name[language]}
+
 </h1>
 
 
 
 
 
-<div className="flex gap-3 items-center mb-5">
 
-<span
-className="
+<div className="
+flex
+items-center
+gap-3
+mb-5
+">
+
+
+<span className="
 text-3xl
 font-bold
 text-pink-500
-"
->
+">
+
 {product.price} DT
+
 </span>
 
 
-{product.oldPrice && (
 
-<span
-className="
-text-gray-400
+
+{
+product.oldPrice &&
+
+<span className="
 line-through
-"
->
+text-gray-400
+">
+
 {product.oldPrice} DT
+
 </span>
 
-)}
+}
+
+
 
 </div>
 
@@ -273,33 +422,95 @@ line-through
 
 
 
-<p
-className="
+
+
+
+<p className="
 text-gray-600
 mb-5
-"
->
-{product.description}
+">
+
+{product.description[language]}
+
 </p>
 
 
 
 
 
-<p className="mb-4">
-⭐ {product.rating}/5
-</p>
+
+
+<div className="
+flex
+items-center
+gap-2
+mb-5
+">
+
+
+{
+
+[1,2,3,4,5].map((s)=>(
+
+
+<Star
+
+key={s}
+
+size={20}
+
+className={
+
+s<=product.rating
+
+?
+
+"fill-yellow-400 text-yellow-400"
+
+:
+
+"text-gray-300"
+
+}
+
+/>
+
+
+))
+
+}
+
+
+
+<span>
+
+({product.reviews || 0} {t.reviews})
+
+</span>
+
+
+</div>
 
 
 
 
 
-<p className="font-semibold mb-5">
 
-Stock :
 
-<span className="text-green-600">
+
+<p className="
+font-semibold
+mb-5
+">
+
+{t.stock} :
+
+<span className="
+text-green-600
+">
+
  {product.stock}
+
 </span>
 
 </p>
@@ -312,107 +523,140 @@ Stock :
 
 
 
-
-{/* SIZE */}
-
-{product.sizes?.length > 0 && (
+{product.sizes?.length > 0 &&
 
 <div className="mb-5">
 
 <h3 className="font-bold mb-2">
-Taille
+
+{t.size}
+
 </h3>
 
 
 <div className="flex gap-3 flex-wrap">
 
-{product.sizes.map((s)=>(
+
+{
+
+product.sizes.map((s,index)=>(
+
 
 <button
 
-key={s}
+key={index}
 
-onClick={()=>setSize(s)}
+onClick={()=>setSize(s.fr)}
 
 className={`
+
 px-4
+
 py-2
+
 rounded-xl
+
 border
-transition
+
 ${
-size===s
-?"bg-pink-500 text-white"
-:"bg-white"
+
+size===s.fr
+
+?
+
+"bg-pink-500 text-white"
+
+:
+
+"bg-white"
+
 }
+
 `}
 
 >
 
-{s}
+{s[language]}
 
 </button>
 
-))}
+
+))
+
+}
+
 
 </div>
 
 
 </div>
 
-)}
+}
 
 
 
-
-
-
-
-
-
-{/* COLOR */}
-
-{product.colors?.length > 0 && (
+{product.colors?.length > 0 &&
 
 <div className="mb-6">
 
 
 <h3 className="font-bold mb-2">
-Couleur
+
+{t.color}
+
 </h3>
 
 
 <div className="flex gap-3 flex-wrap">
 
 
-{product.colors.map((c)=>(
+{
+
+product.colors.map((c,index)=>(
+
 
 <button
 
-key={c}
+key={index}
 
-onClick={()=>setColor(c)}
+onClick={()=>setColor(c.fr)}
 
 className={`
+
 px-4
+
 py-2
+
 rounded-xl
+
 border
-transition
+
 ${
-color===c
-?"bg-blue-500 text-white"
-:"bg-white"
+
+color===c.fr
+
+?
+
+"bg-blue-500 text-white"
+
+:
+
+"bg-white"
+
 }
+
 `}
 
 >
 
-{c}
+{c[language]}
 
 </button>
 
-))}
+
+))
+
+}
 
 
 </div>
@@ -420,8 +664,7 @@ color===c
 
 </div>
 
-)}
-
+}
 
 
 
@@ -449,14 +692,17 @@ transition
 
 >
 
-🛒 Ajouter au panier
+{t.add}
 
 </button>
 
 
 
-</div>
 
+
+
+
+</div>
 
 
 </div>
@@ -464,6 +710,8 @@ transition
 
 </section>
 
-  );
+
+);
+
 
 }

@@ -1,7 +1,15 @@
-export default function Features() {
+"use client";
+
+import { useLanguage } from "@/context/LanguageContext";
 
 
-const features = [
+
+const translations = {
+
+fr:{
+title:"Pourquoi choisir Baby Shop ?",
+
+features:[
 
 {
 icon:"🚚",
@@ -21,48 +29,155 @@ title:"Paiement sécurisé",
 text:"Vos achats sont protégés et fiables."
 }
 
-];
+]
+
+},
+
+
+
+en:{
+title:"Why choose Baby Shop?",
+
+features:[
+
+{
+icon:"🚚",
+title:"Fast Delivery",
+text:"Receive your baby products easily."
+},
+
+{
+icon:"⭐",
+title:"Guaranteed Quality",
+text:"Carefully selected items for your baby."
+},
+
+{
+icon:"🔒",
+title:"Secure Payment",
+text:"Your purchases are protected and reliable."
+}
+
+]
+
+},
+
+
+
+ar:{
+title:"لماذا تختار Baby Shop؟",
+
+features:[
+
+{
+icon:"🚚",
+title:"توصيل سريع",
+text:"استلم منتجات طفلك بكل سهولة."
+},
+
+{
+icon:"⭐",
+title:"جودة مضمونة",
+text:"منتجات مختارة بعناية لطفلك."
+},
+
+{
+icon:"🔒",
+title:"دفع آمن",
+text:"مشترياتك محمية وموثوقة."
+}
+
+]
+
+}
+
+};
+
+
+
+
+
+
+
+export default function Features(){
+
+
+
+const {language}=useLanguage();
+
+
+const t=translations[language];
+
+
 
 
 
 return (
 
-<section className="
+
+<section
+
+dir={language==="ar" ? "rtl":"ltr"}
+
+className="
 py-12
 bg-pink-50
-">
+"
+
+>
 
 
-<div className="
-container
-">
+<div
+
+className="
+max-w-7xl
+mx-auto
+px-6
+"
+
+>
 
 
-<h2 className="
+
+
+
+<h2
+
+className="
 text-center
 text-3xl
 font-bold
 text-gray-800
 mb-8
-">
+"
 
-Pourquoi choisir Baby Shop ?
+>
+
+{t.title}
 
 </h2>
 
 
 
-<div className="
+
+
+
+
+<div
+
+className="
 grid
 grid-cols-1
 md:grid-cols-3
 gap-5
-">
+"
+
+>
 
 
 {
 
-features.map((item,index)=>(
+t.features.map((item,index)=>(
 
 
 <div
@@ -79,14 +194,17 @@ hover:shadow-lg
 transition
 "
 
-
 >
 
 
-<div className="
+<div
+
+className="
 text-4xl
 mb-3
-">
+"
+
+>
 
 {item.icon}
 
@@ -94,12 +212,18 @@ mb-3
 
 
 
-<h3 className="
+
+
+<h3
+
+className="
 font-bold
 text-lg
 text-gray-800
 mb-2
-">
+"
+
+>
 
 {item.title}
 
@@ -108,15 +232,22 @@ mb-2
 
 
 
-<p className="
+
+
+<p
+
+className="
 text-sm
 text-gray-500
 leading-relaxed
-">
+"
+
+>
 
 {item.text}
 
 </p>
+
 
 
 
@@ -125,10 +256,14 @@ leading-relaxed
 
 ))
 
+
 }
 
 
 </div>
+
+
+
 
 
 </div>
@@ -137,6 +272,7 @@ leading-relaxed
 </section>
 
 
-)
+);
+
 
 }

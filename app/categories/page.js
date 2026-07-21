@@ -7,7 +7,7 @@ return (
 
 <main>
 
-<Categories/>
+<Categories />
 
 </main>
 
