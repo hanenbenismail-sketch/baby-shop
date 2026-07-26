@@ -53,16 +53,13 @@ const t=translations[language];
 
 return (
 
-
 <section
-
 className="
 max-w-7xl
 mx-auto
 px-6
-py-12
+py-8
 "
-
 >
 
 
@@ -80,9 +77,9 @@ flex-col
 md:flex-row
 items-center
 justify-between
-p-8
-md:p-12
-gap-8
+p-5
+md:p-8
+gap-5
 "
 
 dir={language==="ar" ? "rtl" : "ltr"}
@@ -92,42 +89,32 @@ dir={language==="ar" ? "rtl" : "ltr"}
 
 
 
-
 {/* TEXT */}
 
-
 <div
-
 className="
 max-w-xl
 "
-
 >
 
 
 <p
-
 className="
 text-pink-500
 font-semibold
-mb-3
+mb-2
 "
-
 >
-
 {t.welcome}
-
 </p>
-
-
 
 
 
 <h1
 
 className="
-text-4xl
-md:text-6xl
+text-3xl
+md:text-5xl
 font-extrabold
 text-gray-800
 leading-tight
@@ -142,14 +129,13 @@ leading-tight
 
 
 
-
 <p
 
 className="
 text-gray-600
-text-lg
-mt-5
-mb-8
+text-base
+mt-4
+mb-6
 "
 
 >
@@ -157,9 +143,6 @@ mb-8
 {t.description}
 
 </p>
-
-
-
 
 
 
@@ -174,8 +157,8 @@ bg-pink-500
 hover:bg-pink-600
 text-white
 font-semibold
-px-8
-py-3
+px-7
+py-2.5
 rounded-full
 transition
 shadow-lg
@@ -188,12 +171,7 @@ shadow-lg
 </Link>
 
 
-
-
-
 </div>
-
-
 
 
 
@@ -203,15 +181,14 @@ shadow-lg
 
 {/* IMAGE */}
 
-
 <div
 
 className="
 relative
 w-full
 md:w-1/2
-h-[300px]
-md:h-[450px]
+h-[220px]
+md:h-[350px]
 "
 
 >
@@ -241,10 +218,7 @@ rounded-3xl
 
 
 
-
-
 </div>
-
 
 
 </section>

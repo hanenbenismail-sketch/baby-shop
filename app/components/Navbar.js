@@ -54,20 +54,18 @@ const {
 
 
 
-
-
 function handleSearch(){
 
 
 if(search.trim()){
 
 router.push(
-`/products?search=${encodeURIComponent(search)}`
+`/search?q=${encodeURIComponent(search)}`
 );
 
 }else{
 
-router.push("/products");
+router.push("/search");
 
 }
 

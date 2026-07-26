@@ -68,6 +68,7 @@ totalPrice
 }=useCart();
 
 
+
 const router=useRouter();
 
 
@@ -90,7 +91,6 @@ city:""
 
 
 
-
 function handleChange(e){
 
 setForm({
@@ -106,7 +106,7 @@ setForm({
 
 
 
-function handleSubmit(e){
+async function handleSubmit(e){
 
 e.preventDefault();
 
@@ -126,14 +126,129 @@ return;
 
 
 
-localStorage.setItem(
-"customer",
-JSON.stringify(form)
+try{
+
+
+const orderData={
+
+
+products:cart.map(item=>({
+
+
+product:item._id || item.id,
+
+
+name:item.name?.[language] || item.name,
+
+
+price:item.price,
+
+
+quantity:item.quantity,
+
+
+image:item.image
+
+
+})),
+
+
+
+customer:{
+
+
+name:form.name,
+
+
+phone:form.phone,
+
+
+address:form.address,
+
+
+city:form.city
+
+
+},
+
+
+
+totalPrice:totalPrice()
+
+};
+
+
+
+
+const res=await fetch("/api/orders",{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify(orderData)
+
+
+});
+
+
+
+
+if(res.ok){
+
+
+localStorage.removeItem("baby-cart");
+
+
+
+alert(
+language==="ar"
+?
+"تم إنشاء الطلب بنجاح"
+:
+"Order created successfully"
 );
 
 
 
 router.push("/payment");
+
+
+
+}else{
+
+
+alert(
+language==="ar"
+?
+"حدث خطأ أثناء إنشاء الطلب"
+:
+"Error creating order"
+);
+
+
+}
+
+
+
+}catch(error){
+
+
+console.log(error);
+
+
+alert("Server error");
+
+
+}
 
 
 }
@@ -148,32 +263,16 @@ if(cart.length===0){
 
 return (
 
-<div
-className="
-min-h-screen
-flex
-items-center
-justify-center
-px-6
-"
->
-
+<div className="min-h-screen flex items-center justify-center px-6">
 
 <div className="text-center">
 
 
-<h1
-className="
-text-3xl
-font-bold
-mb-5
-"
->
+<h1 className="text-3xl font-bold mb-5">
 
 {t.empty}
 
 </h1>
-
 
 
 <button
@@ -196,9 +295,7 @@ font-bold
 </button>
 
 
-
 </div>
-
 
 </div>
 
@@ -211,9 +308,7 @@ font-bold
 
 
 
-
 return (
-
 
 <section
 
@@ -230,15 +325,7 @@ py-12
 >
 
 
-
-<h1
-className="
-text-4xl
-font-bold
-text-center
-mb-10
-"
->
+<h1 className="text-4xl font-bold text-center mb-10">
 
 {t.title}
 
@@ -247,17 +334,7 @@ mb-10
 
 
 
-
-
-<div
-className="
-grid
-md:grid-cols-2
-gap-10
-"
->
-
-
+<div className="grid md:grid-cols-2 gap-10">
 
 
 
@@ -278,20 +355,11 @@ border
 >
 
 
-<h2
-className="
-text-2xl
-font-bold
-mb-6
-"
->
+<h2 className="text-2xl font-bold mb-6">
 
 {t.info}
 
 </h2>
-
-
-
 
 
 
@@ -305,18 +373,9 @@ value={form.name}
 
 onChange={handleChange}
 
-className="
-w-full
-border
-rounded-xl
-p-3
-mb-4
-"
+className="w-full border rounded-xl p-3 mb-4"
 
 />
-
-
-
 
 
 
@@ -330,18 +389,9 @@ value={form.phone}
 
 onChange={handleChange}
 
-className="
-w-full
-border
-rounded-xl
-p-3
-mb-4
-"
+className="w-full border rounded-xl p-3 mb-4"
 
 />
-
-
-
 
 
 
@@ -355,18 +405,9 @@ value={form.address}
 
 onChange={handleChange}
 
-className="
-w-full
-border
-rounded-xl
-p-3
-mb-4
-"
+className="w-full border rounded-xl p-3 mb-4"
 
 />
-
-
-
 
 
 
@@ -380,18 +421,9 @@ value={form.city}
 
 onChange={handleChange}
 
-className="
-w-full
-border
-rounded-xl
-p-3
-mb-6
-"
+className="w-full border rounded-xl p-3 mb-6"
 
 />
-
-
-
 
 
 
@@ -414,36 +446,16 @@ font-bold
 </button>
 
 
-
 </form>
 
 
 
 
 
+<div className="bg-gray-50 rounded-3xl p-8 border">
 
 
-
-
-
-<div
-className="
-bg-gray-50
-rounded-3xl
-p-8
-border
-"
->
-
-
-
-<h2
-className="
-text-2xl
-font-bold
-mb-6
-"
->
+<h2 className="text-2xl font-bold mb-6">
 
 {t.summary}
 
@@ -451,12 +463,8 @@ mb-6
 
 
 
-
-
 {
-
 cart.map(item=>(
-
 
 <div
 
@@ -470,6 +478,7 @@ py-3
 "
 
 >
+
 
 <span>
 
@@ -485,8 +494,8 @@ py-3
 </span>
 
 
-</div>
 
+</div>
 
 ))
 
@@ -494,19 +503,7 @@ py-3
 
 
 
-
-
-
-
-<div
-className="
-mt-6
-flex
-justify-between
-text-xl
-font-bold
-"
->
+<div className="mt-6 flex justify-between text-xl font-bold">
 
 
 <span>
@@ -516,11 +513,7 @@ font-bold
 </span>
 
 
-<span
-className="
-text-pink-500
-"
->
+<span className="text-pink-500">
 
 {totalPrice()} DT
 
@@ -531,10 +524,7 @@ text-pink-500
 
 
 
-
-
 </div>
-
 
 
 

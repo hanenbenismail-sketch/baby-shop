@@ -203,13 +203,12 @@ mt-10
 
 :
 
-
-cart.map(item=>(
+cart.map((item,index)=>(
 
 
 <div
 
-key={item.id}
+key={`${item.id}-${index}`}
 
 className="
 flex

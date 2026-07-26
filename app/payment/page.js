@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 
 
-
 const translations = {
 
 fr:{
@@ -57,11 +56,7 @@ empty:"السلة فارغة"
 
 
 
-
-
-
 export default function Payment(){
-
 
 
 const {
@@ -69,7 +64,6 @@ cart,
 totalPrice,
 clearCart
 }=useCart();
-
 
 
 const router=useRouter();
@@ -82,9 +76,7 @@ const t=translations[language];
 
 
 
-
 const [paymentMethod,setPaymentMethod]=useState("delivery");
-
 
 const [success,setSuccess]=useState(false);
 
@@ -92,11 +84,100 @@ const [success,setSuccess]=useState(false);
 
 
 
-
-function handlePayment(){
+async function handlePayment(){
 
 
 if(cart.length===0) return;
+
+
+
+try{
+
+
+const customer = JSON.parse(
+localStorage.getItem("customer") || "{}"
+);
+
+
+
+const orderData={
+
+
+products:cart.map(item=>({
+
+
+product:item._id || item.id,
+
+
+name:item.name?.[language] || item.name,
+
+
+price:item.price,
+
+
+quantity:item.quantity,
+
+
+image:item.image
+
+
+})),
+
+
+
+customer:{
+
+
+name:customer.name,
+
+
+phone:customer.phone,
+
+
+address:customer.address,
+
+
+city:customer.city
+
+
+},
+
+
+
+totalPrice:totalPrice(),
+
+
+
+paymentMethod
+
+};
+
+
+
+
+const res = await fetch("/api/orders",{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify(orderData)
+
+
+});
+
+
+
+
+if(res.ok){
 
 
 setSuccess(true);
@@ -105,9 +186,24 @@ setSuccess(true);
 clearCart();
 
 
+localStorage.removeItem("customer");
+
+
 }
 
 
+
+}catch(error){
+
+
+console.log(error);
+
+
+}
+
+
+
+}
 
 
 
@@ -147,16 +243,12 @@ max-w-lg
 >
 
 
-<h1
-
-className="
+<h1 className="
 text-3xl
 font-bold
 text-green-600
 mb-4
-"
-
->
+">
 
 {t.success}
 
@@ -164,19 +256,14 @@ mb-4
 
 
 
-<p
-
-className="
+<p className="
 text-gray-600
 mb-6
-"
-
->
+">
 
 {t.thanks}
 
 </p>
-
 
 
 
@@ -202,16 +289,12 @@ font-bold
 </button>
 
 
-
 </div>
 
 
-
 </div>
-
 
 );
-
 
 }
 
@@ -219,9 +302,7 @@ font-bold
 
 
 
-
 return (
-
 
 <section
 
@@ -237,23 +318,16 @@ py-12
 >
 
 
-
-<h1
-
-className="
+<h1 className="
 text-4xl
 font-bold
 text-center
 mb-10
-"
-
->
+">
 
 {t.title}
 
 </h1>
-
-
 
 
 
@@ -278,43 +352,30 @@ mb-6
 
 
 
-
-<div
-
-className="
+<div className="
 grid
 md:grid-cols-2
 gap-10
-"
-
->
+">
 
 
 
 
 
-<div
-
-className="
+<div className="
 bg-white
 rounded-3xl
 shadow-lg
 p-8
 border
-"
-
->
+">
 
 
-<h2
-
-className="
+<h2 className="
 text-2xl
 font-bold
 mb-6
-"
-
->
+">
 
 {t.method}
 
@@ -323,11 +384,7 @@ mb-6
 
 
 
-
-
-<label
-
-className="
+<label className="
 flex
 items-center
 gap-3
@@ -336,9 +393,7 @@ rounded-xl
 p-4
 mb-4
 cursor-pointer
-"
-
->
+">
 
 
 <input
@@ -365,11 +420,7 @@ onChange={()=>setPaymentMethod("delivery")}
 
 
 
-
-
-<label
-
-className="
+<label className="
 flex
 items-center
 gap-3
@@ -377,9 +428,7 @@ border
 rounded-xl
 p-4
 cursor-pointer
-"
-
->
+">
 
 
 <input
@@ -401,8 +450,6 @@ onChange={()=>setPaymentMethod("card")}
 
 
 </label>
-
-
 
 
 
@@ -435,10 +482,6 @@ transition
 </button>
 
 
-
-
-
-
 </div>
 
 
@@ -446,30 +489,19 @@ transition
 
 
 
-
-
-
-<div
-
-className="
+<div className="
 bg-gray-50
 rounded-3xl
 p-8
 border
-"
-
->
+">
 
 
-<h2
-
-className="
+<h2 className="
 text-2xl
 font-bold
 mb-6
-"
-
->
+">
 
 {t.summary}
 
@@ -477,13 +509,9 @@ mb-6
 
 
 
-
-
-
 {
 
 cart.map(item=>(
-
 
 <div
 
@@ -515,30 +543,20 @@ py-3
 
 </div>
 
-
 ))
-
 
 }
 
 
 
 
-
-
-
-<div
-
-className="
+<div className="
 mt-6
 flex
 justify-between
 text-xl
 font-bold
-"
-
->
-
+">
 
 <span>
 
@@ -547,33 +565,14 @@ font-bold
 </span>
 
 
-
-<span
-
-className="
-text-pink-500
-"
-
->
+<span className="text-pink-500">
 
 {totalPrice()} DT
 
 </span>
 
 
-
 </div>
-
-
-
-
-
-
-</div>
-
-
-
-
 
 
 </div>
@@ -581,10 +580,10 @@ text-pink-500
 
 
 
+</div>
 
 
 </section>
-
 
 );
 

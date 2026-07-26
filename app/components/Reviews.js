@@ -96,7 +96,7 @@ className="
 max-w-7xl
 mx-auto
 px-6
-py-10
+py-5
 "
 
 >
@@ -105,12 +105,12 @@ py-10
 <h2
 
 className="
-text-2xl
-md:text-3xl
+text-xl
+md:text-2xl
 font-bold
 text-center
 text-gray-800
-mb-2
+mb-1
 "
 
 >
@@ -128,9 +128,8 @@ max-w-2xl
 mx-auto
 text-center
 text-gray-500
-text-sm
-md:text-base
-mb-8
+text-xs
+mb-5
 "
 
 >
@@ -146,7 +145,7 @@ mb-8
 className="
 grid
 md:grid-cols-3
-gap-5
+gap-3
 "
 
 >
@@ -162,12 +161,12 @@ key={index}
 
 className="
 bg-white
-rounded-2xl
+rounded-xl
 border
 border-gray-100
 shadow-sm
-p-5
-hover:shadow-lg
+p-3
+hover:shadow-md
 transition
 "
 
@@ -179,8 +178,8 @@ transition
 className="
 flex
 items-center
-gap-3
-mb-4
+gap-2
+mb-2
 "
 
 >
@@ -192,9 +191,9 @@ src={review.image}
 
 alt={review.name}
 
-width={50}
+width={35}
 
-height={50}
+height={35}
 
 className="
 rounded-full
@@ -207,7 +206,7 @@ object-cover
 
 <div>
 
-<h3 className="font-bold">
+<h3 className="font-bold text-sm">
 
 {review.name}
 
@@ -221,12 +220,12 @@ flex
 items-center
 gap-1
 text-green-500
-text-xs
+text-[10px]
 "
 
 >
 
-<BadgeCheck size={14}/>
+<BadgeCheck size={12}/>
 
 {t.verified}
 
@@ -240,7 +239,7 @@ text-xs
 
 
 
-<div className="flex mb-3">
+<div className="flex mb-2">
 
 {
 [1,2,3,4,5].map((star)=>(
@@ -249,7 +248,7 @@ text-xs
 
 key={star}
 
-size={17}
+size={14}
 
 className={
 star <= review.rating
@@ -272,9 +271,9 @@ star <= review.rating
 
 className="
 text-gray-600
-text-sm
-leading-6
-line-clamp-3
+text-xs
+leading-5
+line-clamp-2
 "
 
 >

@@ -6,11 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-admin": "node --env-file=.env.local scripts/createAdmin.js"
   },
   "dependencies": {
     "axios": "^1.18.1",
+    "bcryptjs": "^3.0.3",
     "bootstrap": "^5.3.8",
+    "cloudinary": "^2.10.0",
+    "dotenv": "^17.4.2",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.25.0",
     "mongodb": "^7.5.0",
     "mongoose": "^9.7.4",

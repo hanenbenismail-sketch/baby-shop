@@ -42,15 +42,11 @@ export default function FeaturedProducts(){
 
 const {language}=useLanguage();
 
-
 const t=translations[language];
 
 
-
 const featured = products
-
 .filter(product=>product.featured)
-
 .slice(0,8);
 
 
@@ -66,7 +62,7 @@ dir={language==="ar" ? "rtl":"ltr"}
 
 className="
 bg-pink-50
-py-16
+py-8
 "
 
 >
@@ -84,17 +80,15 @@ px-6
 
 
 
-
-
 <h2
 
 className="
-text-3xl
-md:text-4xl
+text-2xl
+md:text-3xl
 font-bold
 text-center
 text-gray-800
-mb-4
+mb-3
 "
 
 >
@@ -112,7 +106,8 @@ mb-4
 className="
 text-center
 text-gray-600
-mb-10
+text-sm
+mb-6
 "
 
 >
@@ -143,7 +138,7 @@ products={featured}
 
 className="
 text-center
-mt-10
+mt-6
 "
 
 >
@@ -161,11 +156,12 @@ bg-gradient-to-r
 from-pink-500
 to-blue-500
 text-white
-px-8
-py-3
+px-6
+py-2
 rounded-full
+text-sm
 font-bold
-shadow-lg
+shadow-md
 hover:scale-105
 transition
 "
@@ -179,8 +175,8 @@ transition
 </Link>
 
 
-
 </div>
+
 
 
 

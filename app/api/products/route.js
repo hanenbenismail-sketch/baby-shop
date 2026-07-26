@@ -2,19 +2,20 @@ import { connectDB } from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 
+
 // GET ALL PRODUCTS
 
 export async function GET(){
 
-
 try{
-
 
 await connectDB();
 
 
-const products = await Product.find();
-
+const products = await Product.find()
+.sort({
+createdAt:-1
+});
 
 
 return Response.json(products);
@@ -25,7 +26,8 @@ return Response.json(products);
 
 return Response.json(
 {
-message:"Error fetching products"
+message:"Error fetching products",
+error:error.message
 },
 {
 status:500
@@ -35,10 +37,7 @@ status:500
 
 }
 
-
 }
-
-
 
 
 
@@ -63,9 +62,12 @@ const product = await Product.create(body);
 
 
 
-return Response.json(product,{
+return Response.json(
+product,
+{
 status:201
-});
+}
+);
 
 
 
@@ -74,7 +76,8 @@ status:201
 
 return Response.json(
 {
-message:"Error creating product"
+message:"Error creating product",
+error:error.message
 },
 {
 status:500

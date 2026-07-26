@@ -1,16 +1,13 @@
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import CartDrawer from "./components/CartDrawer";
+import ClientLayout from "./components/ClientLayout";
 
 import CartProvider from "@/context/CartContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 
 import LanguageLayout from "./components/LanguageLayout";
-
 
 
 
@@ -62,7 +59,6 @@ description:
 
 type:"website",
 
-
 locale:"fr_TN"
 
 
@@ -77,12 +73,12 @@ index:true,
 
 follow:true
 
+
 }
 
 
 
 };
-
 
 
 
@@ -128,7 +124,6 @@ antialiased
 >
 
 
-
 <CartProvider>
 
 
@@ -142,22 +137,11 @@ antialiased
 <LanguageLayout>
 
 
-<Navbar />
-
-
-<CartDrawer />
-
-
-
-<main>
+<ClientLayout>
 
 {children}
 
-</main>
-
-
-
-<Footer />
+</ClientLayout>
 
 
 
@@ -178,9 +162,7 @@ antialiased
 </body>
 
 
-
 </html>
-
 
 
 );

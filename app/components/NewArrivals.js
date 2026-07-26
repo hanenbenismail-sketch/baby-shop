@@ -40,181 +40,163 @@ const translations = {
 export default function NewArrivals(){
 
 
-  const {language}=useLanguage();
+const {language}=useLanguage();
 
+const t = translations[language];
 
-  const t = translations[language];
 
+const newProducts = products
+.filter(product=>product.newArrival)
+.slice(0,8);
 
 
-  const newProducts = products
-    .filter(product=>product.newArrival)
-    .slice(0,8);
 
+return (
 
 
+<section
 
+dir={language==="ar" ? "rtl" : "ltr"}
 
-  return (
+className="
+py-8
+bg-white
+"
 
+>
 
-    <section
 
-      dir={language==="ar" ? "rtl" : "ltr"}
+<div
 
-      className="
-      py-16
-      bg-white
-      "
+className="
+max-w-7xl
+mx-auto
+px-6
+"
 
-    >
+>
 
 
 
-      <div
+<h2
 
-        className="
-        max-w-7xl
-        mx-auto
-        px-6
-        "
+className="
+text-2xl
+md:text-3xl
+font-bold
+text-center
+text-gray-800
+mb-3
+"
 
-      >
+>
 
+{t.title}
 
+</h2>
 
 
 
-        <h2
 
-          className="
-          text-3xl
-          md:text-4xl
-          font-bold
-          text-center
-          text-gray-800
-          mb-4
-          "
 
-        >
+<p
 
-          {t.title}
+className="
+text-center
+text-gray-600
+text-sm
+mb-6
+"
 
-        </h2>
+>
 
+{t.description}
 
+</p>
 
 
 
 
-        <p
 
-          className="
-          text-center
-          text-gray-600
-          mb-10
-          "
+{
+newProducts.length > 0 ? (
 
-        >
+<ProductsCarousel
+products={newProducts}
+/>
 
-          {t.description}
+) : (
 
-        </p>
+<p
 
+className="
+text-center
+text-gray-500
+"
 
+>
 
+Aucun nouveau produit disponible
 
+</p>
 
+)
 
+}
 
-        {
-          newProducts.length > 0 ? (
 
 
-            <ProductsCarousel
 
-              products={newProducts}
 
-            />
+<div
 
+className="
+text-center
+mt-6
+"
 
-          ) : (
+>
 
 
-            <p
+<Link
 
-              className="
-              text-center
-              text-gray-500
-              "
+href="/products"
 
-            >
+className="
+inline-flex
+bg-gradient-to-r
+from-blue-500
+to-pink-500
+text-white
+px-6
+py-2
+rounded-full
+text-sm
+font-bold
+shadow-md
+hover:scale-105
+transition
+"
 
-              Aucun nouveau produit disponible
+>
 
-            </p>
+{t.button}
 
+</Link>
 
-          )
-        }
 
+</div>
 
 
 
 
+</div>
 
 
-        <div
+</section>
 
-          className="
-          text-center
-          mt-10
-          "
 
-        >
-
-
-
-          <Link
-
-            href="/products"
-
-            className="
-            inline-flex
-            bg-gradient-to-r
-            from-blue-500
-            to-pink-500
-            text-white
-            px-8
-            py-3
-            rounded-full
-            font-bold
-            shadow-md
-            hover:scale-105
-            transition
-            "
-
-          >
-
-            {t.button}
-
-          </Link>
-
-
-
-        </div>
-
-
-
-
-
-      </div>
-
-
-    </section>
-
-
-  );
+);
 
 
 }
