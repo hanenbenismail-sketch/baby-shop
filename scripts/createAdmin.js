@@ -44,8 +44,7 @@ async function createAdmin(){
 
       name:"Admin",
 
-      email:"",
-admin@babyshop.com
+      email:"admin@babyshop.com",
       password:hashedPassword,
 
       role:"admin"
