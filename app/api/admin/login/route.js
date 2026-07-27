@@ -75,6 +75,14 @@ status:403
 
 
 
+if(!process.env.JWT_SECRET){
+
+throw new Error("JWT_SECRET is missing");
+
+}
+
+
+
 const token = jwt.sign(
 
 {
@@ -122,7 +130,7 @@ secure:process.env.NODE_ENV === "production",
 
 sameSite:"strict",
 
-maxAge:60*60*24*7,
+maxAge:60 * 60 * 24 * 7,
 
 path:"/"
 
@@ -139,7 +147,11 @@ return response;
 }catch(error){
 
 
-console.log("LOGIN ERROR:",error.message);
+console.error(
+"LOGIN ERROR:",
+error
+);
+
 
 
 return NextResponse.json(
