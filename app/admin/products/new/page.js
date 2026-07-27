@@ -160,6 +160,7 @@ images:[]
 
 
 
+
 if(res.ok){
 
 
@@ -200,6 +201,7 @@ alert("Something went wrong.");
 
 
 
+
 return (
 
 <main className="max-w-3xl mx-auto p-8">
@@ -214,13 +216,17 @@ Add Product
 
 
 
+
 <form
+
+noValidate
 
 onSubmit={handleSubmit}
 
 className="space-y-4"
 
 >
+
 
 
 
@@ -239,9 +245,9 @@ onChange={handleChange}
 
 className="w-full border rounded-lg p-3"
 
-required
-
 />
+
+
 
 
 
@@ -261,9 +267,9 @@ onChange={handleChange}
 
 className="w-full border rounded-lg p-3"
 
-required
-
 />
+
+
 
 
 
@@ -289,6 +295,8 @@ className="w-full border rounded-lg p-3"
 
 
 
+
+
 <input
 
 type="text"
@@ -303,9 +311,9 @@ onChange={handleChange}
 
 className="w-full border rounded-lg p-3"
 
-required
-
 />
+
+
 
 
 
@@ -331,6 +339,8 @@ className="w-full border rounded-lg p-3"
 
 
 
+
+
 <input
 
 type="number"
@@ -346,6 +356,8 @@ onChange={handleChange}
 className="w-full border rounded-lg p-3"
 
 />
+
+
 
 
 
@@ -371,6 +383,8 @@ className="w-full border rounded-lg p-3"
 
 
 
+
+
 <input
 
 type="file"
@@ -382,6 +396,9 @@ onChange={(e)=>setImageFile(e.target.files[0])}
 className="w-full border rounded-lg p-3"
 
 />
+
+
+
 
 
 
@@ -403,6 +420,9 @@ rows={5}
 className="w-full border rounded-lg p-3"
 
 />
+
+
+
 
 
 
@@ -437,6 +457,8 @@ uploading
 }
 
 </button>
+
+
 
 
 
