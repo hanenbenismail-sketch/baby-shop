@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 
 
-
 const translations = {
 
 fr:{
@@ -68,26 +67,18 @@ success:"تم إنشاء الحساب بنجاح 🎉"
 
 
 
-
-
-
-
-
 export default function RegisterPage(){
 
 
+const router = useRouter();
 
-const router=useRouter();
+const {language} = useLanguage();
 
-
-const {language}=useLanguage();
-
-
-const t=translations[language];
+const t = translations[language];
 
 
 
-const [form,setForm]=useState({
+const [form,setForm] = useState({
 
 name:"",
 email:"",
@@ -100,9 +91,9 @@ password_confirmation:""
 
 
 
-const [error,setError]=useState("");
+const [error,setError] = useState("");
 
-const [success,setSuccess]=useState("");
+const [success,setSuccess] = useState("");
 
 
 
@@ -114,7 +105,7 @@ setForm({
 
 ...form,
 
-[e.target.name]:e.target.value
+[e.target.name]: e.target.value
 
 });
 
@@ -123,14 +114,13 @@ setForm({
 
 
 
-
 function handleSubmit(e){
-
 
 e.preventDefault();
 
 
 setError("");
+setSuccess("");
 
 
 
@@ -149,7 +139,6 @@ return;
 
 
 
-
 if(form.password !== form.password_confirmation){
 
 setError(t.match);
@@ -157,7 +146,6 @@ setError(t.match);
 return;
 
 }
-
 
 
 
@@ -172,17 +160,13 @@ router.push("/login");
 },1500);
 
 
-
 }
 
 
 
 
 
-
 return (
-
-
 
 <section
 
@@ -204,7 +188,6 @@ to-blue-50
 >
 
 
-
 <div
 
 className="
@@ -221,18 +204,7 @@ border-gray-100
 >
 
 
-
-
-<div
-
-className="
-flex
-justify-center
-mb-6
-"
-
->
-
+<div className="flex justify-center mb-6">
 
 <Image
 
@@ -244,25 +216,16 @@ width={70}
 
 height={70}
 
-className="
-rounded-full
-shadow-md
-"
+className="rounded-full shadow-md"
 
 />
-
 
 </div>
 
 
 
 
-
-
-
-<h1
-
-className="
+<h1 className="
 text-3xl
 font-extrabold
 text-center
@@ -272,9 +235,7 @@ from-pink-500
 to-blue-500
 bg-clip-text
 text-transparent
-"
-
->
+">
 
 {t.title}
 
@@ -282,16 +243,7 @@ text-transparent
 
 
 
-
-<p
-
-className="
-text-center
-text-gray-500
-mb-8
-"
-
->
+<p className="text-center text-gray-500 mb-8">
 
 {t.subtitle}
 
@@ -299,11 +251,7 @@ mb-8
 
 
 
-
-
-
-
-{error &&
+{error && (
 
 <p className="
 bg-red-50
@@ -317,14 +265,11 @@ text-center
 
 </p>
 
-}
+)}
 
 
 
-
-
-
-{success &&
+{success && (
 
 <p className="
 bg-green-50
@@ -338,9 +283,7 @@ text-center
 
 </p>
 
-}
-
-
+)}
 
 
 
@@ -350,24 +293,26 @@ text-center
 
 onSubmit={handleSubmit}
 
-className="
-space-y-4
-"
+className="space-y-4"
 
 >
-
-
 
 
 
 {
 
 [
+
 ["name",t.name],
+
 ["email",t.email],
+
 ["phone",t.phone],
+
 ["address",t.address],
+
 ["password",t.password],
+
 ["password_confirmation",t.confirm]
 
 ].map(([key,placeholder])=>(
@@ -379,7 +324,13 @@ key={key}
 
 name={key}
 
-type={key.includes("password")?"password":"text"}
+type={
+key.includes("password")
+?
+"password"
+:
+"text"
+}
 
 placeholder={placeholder}
 
@@ -408,9 +359,6 @@ focus:ring-pink-300
 
 
 
-
-
-
 <button
 
 className="
@@ -433,25 +381,17 @@ shadow-md
 
 
 
-
-
-
 </form>
 
 
 
 
 
-
-<p
-
-className="
+<p className="
 text-center
 mt-6
 text-gray-600
-"
-
->
+">
 
 {t.have}
 
@@ -473,20 +413,14 @@ ml-2
 </Link>
 
 
-
 </p>
-
-
-
 
 
 
 </div>
 
 
-
 </section>
-
 
 
 );
