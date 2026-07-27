@@ -55,12 +55,15 @@ export default function AdminLoginPage(){
       console.log("LOGIN SUCCESS", data);
 
 
+localStorage.setItem(
+  "token",
+  data.token
+);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
-
+localStorage.setItem(
+  "user",
+  JSON.stringify(data.user)
+);
 
 
       console.log("GO TO ORDERS");

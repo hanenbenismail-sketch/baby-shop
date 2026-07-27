@@ -21,7 +21,16 @@ async function getOrders(){
 try{
 
 
-const res = await fetch("/api/orders");
+const token = localStorage.getItem("token");
+
+
+const res = await fetch("/api/orders",{
+
+headers:{
+Authorization:`Bearer ${token}`
+}
+
+});
 
 const data = await res.json();
 
